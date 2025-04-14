@@ -10,14 +10,14 @@ public class TestItem {
     @Autowired
     private UserService userService;  // 确保 userService 被注入
 
-    @Test
-    public void testselectSysadmin() {
-        User user = userService.selectSysadmin();
-        if (user != null) {
-            System.out.println(user);
-            System.out.println(user.toString());
-        } else {
-            System.out.println("User is null");
-        }
-    }
+//    @Test
+//    public void testselectSysadmin() {
+//        User user = userService.selectSysadmin();
+//        if (user != null) {
+//            System.out.println(user);
+//            System.out.println(user.toString());
+//        } else {
+//            System.out.println("User is null");
+//        }
+//    }
 }

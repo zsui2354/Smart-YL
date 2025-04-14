@@ -1,0 +1,74 @@
+package org.hae.yl.facade;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import org.hae.yl.entity.Nursing_home;
+import org.hae.yl.service.Nursing_homeService;
+import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.annotation.Resource;
+import java.util.List;
+
+@Component
+public class Nursing_HomeFacade {
+
+    @Resource
+    Nursing_homeService nursing_homeService; ;
+
+    /**
+     * 分页查询
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    public PageInfo<Nursing_home> queryByPage(
+            @RequestParam(defaultValue = "1") int pageNum,
+            @RequestParam(defaultValue = "10") int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);  // 启动分页
+        List<Nursing_home> list = nursing_homeService.SelectAll();  // 原始查询
+        return new PageInfo<>(list);  // 包装分页对象返回
+    }
+
+    /**
+     * 查询所有
+     * @return
+     */
+    public List<Nursing_home> queryAll() {
+        return nursing_homeService.SelectAll();
+    }
+
+
+    /**
+     * 模糊查询
+     */
+    public List<Nursing_home> queryByLike(String like){
+        return nursing_homeService.SelectByLike(like);
+    }
+
+    /**
+     *  根据 Id 修改
+     */
+    public void Update(int id,Nursing_home nursing_home) {
+        nursing_homeService.Update(id,nursing_home);
+    }
+
+    /**
+     *  根据 Id 删除
+     *  根据 Id 批量删除
+     */
+    public void DeleteById(int id) {
+        nursing_homeService.DeleteById(id);
+    }
+
+    public void DeleteBybatch(List<Integer> ids) {
+        nursing_homeService.DeleteBybatch(ids);
+    }
+
+    /**
+     *  增加
+     */
+    public void Insert(Nursing_home nursing_home) {
+        nursing_homeService.insert(nursing_home);
+    }
+}

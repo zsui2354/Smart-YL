@@ -15,5 +15,15 @@ public interface UserService {
     //根据用户名查询
     User SelectByUsername(String username);
 
-    User selectSysadmin();
+    //根据 Id 修改
+    public void Update(int id,User user);
+
+    //根据 Id 删除
+    public void Delete(int id);
+
+    //根据 Id 批量删除
+    public void DeleteBybatch(List<Integer> ids);
+
+    //添加
+    public void Insert(User user);
 }

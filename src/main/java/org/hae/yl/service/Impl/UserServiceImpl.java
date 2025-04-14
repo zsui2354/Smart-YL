@@ -13,8 +13,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     @Resource
-    UserMapper usermapper;
-
+    private UserMapper usermapper;
 
     @Override
     public List<User> SelectAll() {
@@ -32,7 +31,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User selectSysadmin() {
-        return usermapper.selectSysadmin();
+    public void Update(int id,User user) {
+        usermapper.Update(id,user);
     }
+
+    @Override
+    public void Delete(int id) {
+        usermapper.Delete(id);
+    }
+
+    @Override
+    public void DeleteBybatch(List<Integer> ids) {
+        usermapper.DeleteBybatch(ids);
+    }
+
+    @Override
+    public void Insert(User user) {
+        usermapper.Insert(user);
+    }
+
 }
