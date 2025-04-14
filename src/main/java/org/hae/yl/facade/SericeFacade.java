@@ -1,0 +1,71 @@
+package org.hae.yl.facade;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import org.hae.yl.entity.Service_appointment;
+import org.hae.yl.entity.Service_item;
+import org.hae.yl.service.Service_appointmentService;
+import org.hae.yl.service.Service_itemService;
+import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.annotation.Resource;
+import java.util.List;
+
+@Component
+public class SericeFacade {
+
+    @Resource
+    private Service_itemService service_itemService;
+
+    @Resource
+    private Service_appointmentService service_appointmentService;
+
+    /**
+     * 获取所有可预约服务列表
+     * @param pageNum 页码
+     * @param pageSize 每页数量
+     * @return 分页后的服务列表
+     */
+    public PageInfo<Service_item> getAllAvailableServices(
+            @RequestParam(defaultValue = "1") int pageNum,
+            @RequestParam(defaultValue = "10") int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<Service_item> list = service_itemService.SelectAll();
+        return new PageInfo<>(list);
+    }
+
+    /**
+     * 获取某个服务详情信息
+     * @param serviceId 服务ID
+     * @return 服务详情
+     */
+    public Service_item getServiceDetail(Integer serviceId) {
+        return service_itemService.SelectById(serviceId);
+    }
+
+    /**
+     * 用户提交服务预约申请
+     * @param appointment 预约信息
+     */
+    public void submitAppointment(Service_appointment appointment) {
+        service_appointmentService.Insert(appointment);
+    }
+
+    /**
+     * 用户取消预约
+     * @param appointmentId 预约ID
+     */
+    public void cancelAppointment(Integer appointmentId) {
+        service_appointmentService.DeleteById(appointmentId);
+    }
+
+    /**
+     * 获取某个预约单的当前状态
+     * @param appointmentId 预约ID
+     * @return 预约信息
+     */
+    public Service_appointment getAppointmentStatus(Integer appointmentId) {
+        return service_appointmentService.SelectById(appointmentId);
+    }
+}
