@@ -8,6 +8,7 @@ import org.hae.yl.Util.JwtUtil;
 import org.hae.yl.common.Constants;
 import org.hae.yl.common.Enums.ResultCodeEnum;
 import org.hae.yl.entity.AuthResponse;
+import org.hae.yl.entity.Login_log;
 import org.hae.yl.entity.Nursing_home;
 import org.hae.yl.entity.User;
 import org.hae.yl.exception.CustomException;
@@ -28,6 +29,8 @@ import java.util.List;
 
 @Component
 public class UserFacade {
+
+
 
     @Resource
     UserService userService;
@@ -208,24 +211,10 @@ public class UserFacade {
      * 查询当前用户登录日志（登录时间、IP等）
      * @param request
      */
-//    public void getLoginLogs(HttpServletRequest request){
-//        User userinfo = getUserInfo(request);
-//        login_logService
-//
-//
-//    }
-
-
-
-
-//    id BIGINT AUTO_INCREMENT PRIMARY KEY COMMENT '日志ID',
-//    user_id BIGINT NOT NULL COMMENT              '用户ID',
-//    ip_address VARCHAR(45) COMMENT               '登录IP',
-//    login_time DATETIME NOT NULL COMMENT         '登录时间',
-//    user_agent TEXT COMMENT                      '设备信息',
-
-
-
+    public List<Login_log> getLoginLogs(HttpServletRequest request){
+        User userinfo = getUserInfo(request);
+        return login_logService.SelectUserIdLog(userinfo.getId());
+    }
 
     /**
      * 分页查询

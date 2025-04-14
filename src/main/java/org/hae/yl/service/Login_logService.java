@@ -12,6 +12,11 @@ public interface Login_logService {
     List<Login_log> SelectAll();
 
     /**
+     * 根据用户名ID查询
+     */
+    List<Login_log> SelectUserIdLog(int userId);
+
+    /**
      * 根据Id查询
      */
     Login_log SelectById(int id);

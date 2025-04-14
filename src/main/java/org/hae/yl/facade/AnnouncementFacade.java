@@ -6,6 +6,7 @@ import org.hae.yl.entity.Announcement;
 import org.hae.yl.entity.Health_record;
 import org.hae.yl.service.AnnouncementService;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
@@ -29,6 +30,28 @@ public class AnnouncementFacade {
         PageHelper.startPage(pageNum, pageSize);  // 启动分页
         List<Announcement> list = announcementService.SelectAll();  // 原始查询
         return new PageInfo<>(list);  // 包装分页对象返回
+    }
+
+    /**
+     * 发布公告（系统、机构、社区）（管理员权限）
+     */
+    public void publishNotice(Announcement announcement) {
+        announcementService.Insert(announcement);
+    };
+
+    /**
+     * 根据 Id删除公告
+     */
+    public void DeleteById(int id){
+        announcementService.DeleteById(id);
+    }
+
+    /**
+     * 根据 Id批量删除公告
+     * @param ids
+     */
+    public void DeleteByIdbatch(List<Integer> ids){
+        announcementService.DeleteByIdbatch(ids);
     }
 
     /**
@@ -59,22 +82,5 @@ public class AnnouncementFacade {
         announcementService.Update(id, announcement);
     }
 
-    /**
-     * 根据 Id 删除
-     * 根据 Id 批量删除
-     */
-    public void DeleteById(int id){
-        announcementService.DeleteById(id);
-    }
 
-    public void DeleteByIdbatch(List<Integer> ids){
-        announcementService.DeleteByIdbatch(ids);
-    }
-
-    /**
-     * 增加
-     */
-    public void Insert(Announcement announcement){
-        announcementService.Insert(announcement);
-    }
 }

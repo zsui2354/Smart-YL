@@ -39,4 +39,12 @@ public interface Nursing_homeService {
      */
     void insert(Nursing_home nursing_home);
 
+    /**
+     *
+     * @param home_id
+     * @return
+     */
+    List<Nursing_home> getOrgServiceList(int home_id);
+
+    Nursing_home mapSearchInstitutions(String name);
 }

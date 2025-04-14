@@ -49,4 +49,14 @@ public class Nursing_homeServiceImpl implements Nursing_homeService {
     public void insert(Nursing_home nursing_home) {
         nursing_homeMapper.insert(nursing_home);
     }
+
+    @Override
+    public List<Nursing_home> getOrgServiceList(int home_id) {
+        return nursing_homeMapper.getOrgServiceList(home_id);
+    }
+
+    @Override
+    public Nursing_home mapSearchInstitutions(String name) {
+        return (Nursing_home) nursing_homeMapper.SelectByLike(name);
+    }
 }

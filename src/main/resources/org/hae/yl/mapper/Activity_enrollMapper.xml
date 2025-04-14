@@ -50,6 +50,10 @@
         select * from Activity_enroll
     </select>
 
+    <select id="MySelectAll" resultType="org.hae.yl.entity.Activity_enroll" resultMap="Activity_enrollResultMap">
+        select * from Activity_enroll WHERE user_id = #{user_id}
+    </select>
+
     <select id="SelectById" resultType="org.hae.yl.entity.Activity_enroll" resultMap="Activity_enrollResultMap">
         select * from Activity_enroll where id = #{id}
     </select>

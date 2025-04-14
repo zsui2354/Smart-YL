@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.hae.yl.entity.Nursing_home;
 import org.hae.yl.service.Nursing_homeService;
+import org.hae.yl.service.Service_itemService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -14,7 +15,8 @@ import java.util.List;
 public class Nursing_HomeFacade {
 
     @Resource
-    Nursing_homeService nursing_homeService; ;
+    Nursing_homeService nursing_homeService;
+
 
     /**
      * 分页查询
@@ -28,6 +30,31 @@ public class Nursing_HomeFacade {
         PageHelper.startPage(pageNum, pageSize);  // 启动分页
         List<Nursing_home> list = nursing_homeService.SelectAll();  // 原始查询
         return new PageInfo<>(list);  // 包装分页对象返回
+    }
+
+    /**
+     * 获取单个机构详细信息
+     * @param id
+     * @return
+     */
+    public Nursing_home SelectById(int id){
+        return nursing_homeService.SelectById(id);
+    }
+
+    /**
+     * 获取某机构下所有服务项目
+     */
+    public List<Nursing_home> getOrgServiceList(int home_id){
+        return nursing_homeService.getOrgServiceList(home_id);
+    }
+
+    /**
+     * 地图搜索机构，根据关键词或位置信息查询
+     * @param name
+     * @return
+     */
+    public Nursing_home mapSearchInstitutions(String name){
+        return nursing_homeService.mapSearchInstitutions(name);
     }
 
     /**

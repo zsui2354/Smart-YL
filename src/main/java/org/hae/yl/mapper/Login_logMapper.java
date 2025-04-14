@@ -14,6 +14,11 @@ public interface Login_logMapper extends BaseMapper<Login_log> {
     List<Login_log> SelectAll();
 
     /**
+     * 根据用户名ID查询
+     */
+    List<Login_log> SelectUserIdLog(int userId);
+
+    /**
      * 根据Id查询
      */
     Login_log SelectById(int id);

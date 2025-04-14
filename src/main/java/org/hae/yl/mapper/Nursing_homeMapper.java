@@ -20,7 +20,7 @@ public interface Nursing_homeMapper extends BaseMapper<Nursing_home> {
     Nursing_home SelectById(int id);
 
     /**
-     * 模糊查询
+     * 地图搜索机构，根据关键词信息模糊查询
      */
     List<Nursing_home> SelectByLike(String like);
 
@@ -41,4 +41,12 @@ public interface Nursing_homeMapper extends BaseMapper<Nursing_home> {
      *  增加
      */
     void Insert(Nursing_home nursing_home);
+
+    /**
+     * 获取某机构下所有服务项目
+     * @param home_id
+     * @return
+     */
+    List<Nursing_home> getOrgServiceList(int home_id);
+
 }

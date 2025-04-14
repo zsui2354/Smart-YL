@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Component
@@ -37,11 +38,12 @@ public class SericeFacade {
 
     /**
      * 获取某个服务详情信息
-     * @param serviceId 服务ID
+     * @param id 服务ID
      * @return 服务详情
      */
-    public Service_item getServiceDetail(Integer serviceId) {
-        return service_itemService.SelectById(serviceId);
+    public Service_item getServiceDetail(Integer id) {
+
+        return service_itemService.SelectById(id);
     }
 
     /**
@@ -54,18 +56,30 @@ public class SericeFacade {
 
     /**
      * 用户取消预约
-     * @param appointmentId 预约ID
+     * @param id 预约ID
      */
-    public void cancelAppointment(Integer appointmentId) {
-        service_appointmentService.DeleteById(appointmentId);
+    public void cancelAppointment(Integer id) {
+        service_appointmentService.DeleteById(id);
     }
 
     /**
      * 获取某个预约单的当前状态
-     * @param appointmentId 预约ID
+     * @param id 预约ID
      * @return 预约信息
      */
-    public Service_appointment getAppointmentStatus(Integer appointmentId) {
-        return service_appointmentService.SelectById(appointmentId);
+    public Service_appointment getAppointmentStatus(Integer id) {
+        return service_appointmentService.SelectById(id);
+    }
+
+    //    管理员为预约任务分配工作人员(职工)
+    public void assignStaffToBooking(int userId,int serviceId,String Datatime,int status ,String note){
+        Service_appointment appointment = null;
+        appointment.setUser_id(userId);
+        appointment.setService_id(serviceId);
+        appointment.setAppointment_time(LocalDateTime.parse(Datatime));
+        appointment.setStatus(status);
+        appointment.setNote(note);
+
+        service_appointmentService.Insert(appointment);
     }
 }

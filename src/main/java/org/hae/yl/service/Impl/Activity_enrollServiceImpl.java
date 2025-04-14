@@ -23,6 +23,11 @@ public class Activity_enrollServiceImpl implements Activity_enrollService {
     }
 
     @Override
+    public List<Activity_enroll> MySelectAll(int user_id) {
+        return activity_enrollMapper.MySelectAll(user_id);
+    }
+
+    @Override
     public Activity_enroll SelectById(int id) {
         return activity_enrollMapper.SelectById(id);
     }

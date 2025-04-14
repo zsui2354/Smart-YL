@@ -10,21 +10,15 @@ import org.hae.yl.common.Enums.ResultCodeEnum;
 import org.hae.yl.entity.User;
 import org.hae.yl.entity.Role;
 import org.hae.yl.exception.CustomException;
-import org.hae.yl.facade.RoleFacade;
 import org.hae.yl.facade.UserFacade;
-import org.hae.yl.service.RoleService;
-import org.hae.yl.service.UserService;
 import org.mybatis.logging.Logger;
 import org.mybatis.logging.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.util.AntPathMatcher;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Arrays;
-import java.util.List;
 
 @Configuration
 public class JwtInterceptor implements HandlerInterceptor {

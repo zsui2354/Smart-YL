@@ -79,6 +79,11 @@
            OR description LIKE CONCAT('%', #{like}, '%')
     </select>
 
+    <select id="getOrgServiceList" resultType="org.hae.yl.entity.Nursing_home">
+        SELECT * FROM service_item WHERE home_id = #{home_id}
+    </select>
+
+
 
     <!--    //机构基本信息（名称、位置、简介、等级）接口-->
 

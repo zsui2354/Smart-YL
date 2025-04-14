@@ -54,6 +54,10 @@
         select * from Login_log
     </select>
 
+    <select id="SelectUserIdLog" resultType="org.hae.yl.entity.Nursing_home" resultMap="Login_logResultMap">
+        SELECT * FROM Login_log WHERE user_id = #{userId}
+    </select>
+
     <select id="SelectById" resultType="org.hae.yl.entity.Nursing_home" resultMap="Login_logResultMap">
         SELECT * FROM nursing_home
         WHERE Login_log LIKE CONCAT('%', #{like}, '%')

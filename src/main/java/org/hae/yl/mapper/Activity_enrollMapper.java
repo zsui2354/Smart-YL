@@ -15,6 +15,11 @@ public interface Activity_enrollMapper extends BaseMapper<Activity_enroll> {
     List<Activity_enroll> SelectAll();
 
     /**
+     * 查询所有自己记录
+     */
+    List<Activity_enroll> MySelectAll(int user_id);
+
+    /**
      * 根据Id查询
      */
     Activity_enroll SelectById(int id);

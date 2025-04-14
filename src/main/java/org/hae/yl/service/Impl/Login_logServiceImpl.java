@@ -21,6 +21,11 @@ public class Login_logServiceImpl implements Login_logService {
     }
 
     @Override
+    public List<Login_log> SelectUserIdLog(int userId) {
+        return login_logMapper.SelectUserIdLog(userId);
+    }
+
+    @Override
     public Login_log SelectById(int id) {
         return login_logMapper.SelectById(id);
     }
