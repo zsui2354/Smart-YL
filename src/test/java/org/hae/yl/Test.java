@@ -19,6 +19,7 @@ public class Test {
      * 基本使用 JWT
          * 1 . 生成token
          * 2 . 解密token
+         * 3 . 测试JWT功能
      */
 
     @Test
