@@ -103,6 +103,12 @@
             <artifactId>hutool-json</artifactId>
             <version>5.8.18</version>
         </dependency>
+<!--oshi 核心 获取系统信息-->
+        <dependency>
+            <groupId>com.github.oshi</groupId>
+            <artifactId>oshi-core</artifactId>
+            <version>6.4.2</version>
+        </dependency>
     </dependencies>
     <dependencyManagement>
         <dependencies>

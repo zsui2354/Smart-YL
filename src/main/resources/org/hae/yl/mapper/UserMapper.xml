@@ -77,4 +77,12 @@
         SELECT * FROM user
         WHERE username = #{username}
     </select>
+
+    <select id="Usertotal" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM user
+    </select>
+
+    <select id="Admintotal" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM user where role_id = 2 or role_id  = 3
+    </select>
 </mapper>

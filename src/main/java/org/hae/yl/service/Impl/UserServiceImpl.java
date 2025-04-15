@@ -21,6 +21,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public int Usertotal() {
+        return usermapper.Usertotal();
+    }
+
+    @Override
+    public int Admintotal() {
+        return usermapper.Admintotal();
+    }
+
+    @Override
     public User SelectById(int id) {
         return usermapper.selectById(id);
     }

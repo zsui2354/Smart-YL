@@ -17,6 +17,12 @@ public interface Service_appointmentService {
     List<Service_appointment> AppointmentRecord(int userId,int ServicesStatus);
 
     /**
+     * 查询最受欢迎服务排行（按预约次数降序）
+     * @return
+     */
+    List<Service_appointment> GetpH();
+
+    /**
      * 根据Id查询
      */
     Service_appointment SelectById(int id);

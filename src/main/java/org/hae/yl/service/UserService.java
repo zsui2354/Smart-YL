@@ -9,6 +9,12 @@ public interface UserService {
     //查询所有
     List<User> SelectAll();
 
+    //返回用户 total
+    public int Usertotal();
+
+    //返回管理员 total
+    public int Admintotal();
+
     //根据 Id 查询
     User SelectById(int id);
 

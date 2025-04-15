@@ -26,6 +26,11 @@ public class Service_appointmentServiceImpl implements Service_appointmentServic
     }
 
     @Override
+    public List<Service_appointment> GetpH() {
+        return service_appointmentMapper.GetpH();
+    }
+
+    @Override
     public Service_appointment SelectById(int id) {
         return service_appointmentMapper.SelectById(id);
     }

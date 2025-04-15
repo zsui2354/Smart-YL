@@ -18,6 +18,18 @@ public interface UserMapper extends BaseMapper<User> {
     public List<User> SelectAll();
 
     /**
+     * 用户 total
+     * SELECT COUNT(*) FROM user;
+     */
+    public int Usertotal();
+
+    /**
+     * 管理员 total
+     * SELECT COUNT(*) FROM user where role_id = 2 or role_id  = 3;
+     */
+    public int Admintotal();
+
+    /**
      * 根据Id 查询
      * @param id
      * @return
