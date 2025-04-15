@@ -21,7 +21,10 @@ public class Test {
          * 2 . 解密token
      */
 
-
+    @Test
+    public void test(){
+        System.out.println("test");
+    }
     private long time = 1000 * 60 * 60 * 24;
     private String signature = "admin";         //key 密钥
 
