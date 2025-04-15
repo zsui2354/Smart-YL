@@ -15,6 +15,11 @@ public interface Service_appointmentMapper extends BaseMapper<Service_appointmen
     List<Service_appointment> SelectAll();
 
     /**
+     * 查询 对应用户的预约记录
+     */
+    List<Service_appointment> AppointmentRecord(int userId,int ServicesStatus);
+
+    /**
      * 根据Id查询
      */
     Service_appointment SelectById(int id);

@@ -13,6 +13,11 @@ import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.List;
 
+
+/**
+ * 服务预约系统 Facade 层
+ * 负责聚合底层 Service 的业务逻辑
+ */
 @Component
 public class SericeFacade {
 
@@ -42,8 +47,14 @@ public class SericeFacade {
      * @return 服务详情
      */
     public Service_item getServiceDetail(Integer id) {
-
         return service_itemService.SelectById(id);
+    }
+
+    /**
+     * 查询 对应用户的预约记录(status 传值（0待处理，1已确认，2已完成，3已取消）)
+     */
+    public List<Service_appointment> AppointmentRecord(int userId,int ServicesStatus){
+        return service_appointmentService.AppointmentRecord(userId,ServicesStatus);
     }
 
     /**

@@ -26,6 +26,16 @@ public class Health_recordServiceImpl implements Health_recordService {
     }
 
     @Override
+    public Health_record SelectByIdEndSelection(int id) {
+        return health_recordMapper.SelectByIdEndSelection(id);
+    }
+
+    @Override
+    public List<Health_record> SelectAllSignsData(int id) {
+        return health_recordMapper.SelectAllSignsData(id);
+    }
+
+    @Override
     public void Update(int id, Health_record health_record) {
         health_recordMapper.Update(id, health_record);
     }

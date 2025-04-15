@@ -21,6 +21,11 @@ public class Service_appointmentServiceImpl implements Service_appointmentServic
     }
 
     @Override
+    public List<Service_appointment> AppointmentRecord(int userId, int ServicesStatus) {
+        return service_appointmentMapper.AppointmentRecord(userId, ServicesStatus);
+    }
+
+    @Override
     public Service_appointment SelectById(int id) {
         return service_appointmentMapper.SelectById(id);
     }

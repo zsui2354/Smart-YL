@@ -61,4 +61,8 @@
     <select id="SelectById" resultType="org.hae.yl.entity.Service_appointment" resultMap="Service_appointmentResultMap">
         select * from Service_appointment where id = #{id}
     </select>
+
+    <select id="AppointmentRecord" resultType="org.hae.yl.entity.Service_appointment">
+        SELECT * FROM Service_appointment Where user_id = #{userId} AND status = #{ServiceStatus}
+    </select>
 </mapper>

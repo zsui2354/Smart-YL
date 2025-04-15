@@ -7,14 +7,12 @@ import com.github.pagehelper.PageInfo;
 import org.hae.yl.Util.JwtUtil;
 import org.hae.yl.common.Constants;
 import org.hae.yl.common.Enums.ResultCodeEnum;
-import org.hae.yl.entity.AuthResponse;
-import org.hae.yl.entity.Login_log;
-import org.hae.yl.entity.Nursing_home;
-import org.hae.yl.entity.User;
+import org.hae.yl.entity.*;
 import org.hae.yl.exception.CustomException;
 import org.hae.yl.model.LoginRequest;
 import org.hae.yl.model.Userparameter;
 import org.hae.yl.service.Login_logService;
+import org.hae.yl.service.RoleService;
 import org.hae.yl.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,10 +25,16 @@ import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.List;
 
+
+/**
+ * 用户与权限管理模块 Facade 层
+ * 负责聚合底层 Service 的业务逻辑
+ */
 @Component
 public class UserFacade {
 
-
+    @Resource
+    RoleService roleService;
 
     @Resource
     UserService userService;
@@ -263,4 +267,36 @@ public class UserFacade {
         userService.Insert(user);
     }
 
+    //###################################################################
+
+    /**
+     * 角色列表查询
+     * @return
+     */
+    public List<Role> RoleSelectAll(){
+        return roleService.SelectAll();
+    }
+
+    /**
+     * 角色列表分页查询
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    public PageInfo<Role> RolequeryByPage(
+            @RequestParam(defaultValue = "1") int pageNum,
+            @RequestParam(defaultValue = "10") int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);  // 启动分页
+        List<Role> list = roleService.SelectAll();  // 原始查询
+        return new PageInfo<>(list);  // 包装分页对象返回
+    }
+
+    /**
+     * 根据 Id 查询 角色对象
+     * @param id
+     * @return
+     */
+    public Role SelectRoleById(int id){
+        return roleService.SelectById(id);
+    }
 }

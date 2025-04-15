@@ -10,6 +10,7 @@ import org.hae.yl.common.Enums.ResultCodeEnum;
 import org.hae.yl.entity.User;
 import org.hae.yl.entity.Role;
 import org.hae.yl.exception.CustomException;
+import org.hae.yl.facade.RoleFacade;
 import org.hae.yl.facade.UserFacade;
 import org.mybatis.logging.Logger;
 import org.mybatis.logging.LoggerFactory;

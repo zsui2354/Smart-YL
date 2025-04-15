@@ -17,6 +17,20 @@ public interface Health_recordService {
     Health_record SelectById(int id);
 
     /**
+     * 获取用户最近一次健康打卡状态
+     * @param id
+     * @return
+     */
+    Health_record SelectByIdEndSelection(int id);
+
+    /**
+     * 获取ID用户所以体征数据
+     * @param id
+     * @return
+     */
+    List<Health_record> SelectAllSignsData(int id);
+
+    /**
      * 根据 Id 修改
      */
     void Update(int id, Health_record health_record);

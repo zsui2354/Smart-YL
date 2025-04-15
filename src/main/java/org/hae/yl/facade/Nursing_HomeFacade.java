@@ -11,6 +11,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.annotation.Resource;
 import java.util.List;
 
+
+/**
+ * 养老机构信息管理 Facade 层
+ * 负责聚合底层 Service 的业务逻辑
+ */
 @Component
 public class Nursing_HomeFacade {
 

@@ -66,5 +66,13 @@
         select * from Health_record where id = #{id}
     </select>
 
+    <select id="SelectByIdEndSelection" resultType="org.hae.yl.entity.Health_record">
+        SELECT * FROM health_record WHERE id = #{id} ORDER BY date ASC LIMIT 1;
+    </select>
+
+    <select id="SelectAllSignsData" resultType="org.hae.yl.entity.Health_record">
+        Select blood_pressure,heart_rate,temperature from health_record where id = #{id};
+    </select>
+
 
 </mapper>

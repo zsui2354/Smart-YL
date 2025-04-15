@@ -21,6 +21,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .addPathPatterns("/**")     // 拦截所有路径
                 .excludePathPatterns(
                         "/publicapi/**", // 排除所有 /publicapi/ 开头的接口
+                        "/api/**",
                         "/error",        // Spring 默认错误页面
                         "/favicon.ico"   // 防止浏览器请求图标被拦截
                 )
