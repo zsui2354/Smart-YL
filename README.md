@@ -7,6 +7,7 @@
 ### 数据库设计
 
 # 用户与权限相关表
+```
 
 CREATE TABLE role (
 id BIGINT AUTO_INCREMENT PRIMARY KEY COMMENT '角色ID',
@@ -26,9 +27,11 @@ status TINYINT DEFAULT 1 COMMENT '状态(0禁用/1启用)',
 created_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '注册时间',
 CONSTRAINT fk_user_role FOREIGN KEY (role_id) REFERENCES role(id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+```
+
 
 # 养老机构信息表
-
+```
 CREATE TABLE nursing_home (
 id BIGINT AUTO_INCREMENT PRIMARY KEY COMMENT '机构ID',
 name VARCHAR(100) NOT NULL COMMENT '机构名称',
@@ -40,9 +43,9 @@ latitude DOUBLE COMMENT '地图纬度',
 level VARCHAR(20) COMMENT '评级等级',
 created_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '添加时间'
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
+```
 # 服务与预约模块
-
+```
 CREATE TABLE service_item (
 id BIGINT AUTO_INCREMENT PRIMARY KEY COMMENT '服务项目ID',
 name VARCHAR(100) NOT NULL COMMENT '服务名称',
@@ -63,9 +66,9 @@ note TEXT COMMENT '备注说明',
 CONSTRAINT fk_appointment_user FOREIGN KEY (user_id) REFERENCES user(id),
 CONSTRAINT fk_appointment_service FOREIGN KEY (service_id) REFERENCES service_item(id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
+```
 # 公告与通知模块
-
+```
 CREATE TABLE announcement (
 id BIGINT AUTO_INCREMENT PRIMARY KEY COMMENT '公告ID',
 title VARCHAR(100) NOT NULL COMMENT '标题',
@@ -74,10 +77,10 @@ type VARCHAR(20) NOT NULL COMMENT '类型（系统/社区/机构）',
 target_role VARCHAR(20) NOT NULL COMMENT '目标角色（all/admin/user等）',
 created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '发布时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
+```
 
 #  公益活动与新闻模块
-
+```
 CREATE TABLE activity (
 id BIGINT AUTO_INCREMENT PRIMARY KEY COMMENT '活动ID',
 title VARCHAR(100) NOT NULL COMMENT '活动名称',
@@ -107,10 +110,10 @@ content TEXT NOT NULL COMMENT '新闻内容',
 published_at DATETIME NOT NULL COMMENT '发布时间',
 source VARCHAR(100) COMMENT '来源'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
+```
 
 #  健康档案模块
-
+```
 CREATE TABLE health_record (
 id BIGINT AUTO_INCREMENT PRIMARY KEY COMMENT '记录ID',
 user_id BIGINT NOT NULL COMMENT '用户ID',
@@ -122,9 +125,9 @@ remark TEXT COMMENT '备注说明',
 CONSTRAINT fk_healthrecord_user FOREIGN KEY (user_id) REFERENCES user(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-
+```
 # 日志与操作记录
-
+```
 CREATE TABLE login_log (
 id BIGINT AUTO_INCREMENT PRIMARY KEY COMMENT '日志ID',
 user_id BIGINT NOT NULL COMMENT '用户ID',
@@ -134,9 +137,9 @@ user_agent TEXT COMMENT '设备信息',
 
     CONSTRAINT fk_loginlog_user FOREIGN KEY (user_id) REFERENCES user(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
+```
 # Issues
-
+```
 CREATE TABLE discussion (
 id BIGINT AUTO_INCREMENT PRIMARY KEY COMMENT '讨论主题ID',
 title VARCHAR(255) NOT NULL COMMENT '主题标题',
@@ -159,3 +162,4 @@ CONSTRAINT fk_comment_user FOREIGN KEY (user_id) REFERENCES user(id),
 CONSTRAINT fk_comment_discussion FOREIGN KEY (discussion_id) REFERENCES discussion(id),
 CONSTRAINT fk_comment_parent FOREIGN KEY (parent_id) REFERENCES comment(id) ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+```
