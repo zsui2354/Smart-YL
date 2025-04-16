@@ -23,9 +23,6 @@ public class AdminStatsFacade {
     private UserService userService;
 
     @Resource
-    private RoleService roleService;
-
-    @Resource
     private Login_logService login_logService;
 
     @Resource

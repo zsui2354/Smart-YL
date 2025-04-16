@@ -140,5 +140,4 @@ public class IssuesFacade {
         List<Discussion> list = discussionService.SelectAll();  // 原始查询
         return new PageInfo<>(list);  // 包装分页对象返回
     }
-
 }

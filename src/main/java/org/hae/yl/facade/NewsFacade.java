@@ -38,7 +38,7 @@ public class NewsFacade {
      * @param pageSize
      * @return
      */
-    public PageInfo<News> NewsqueryByPage(
+    public PageInfo<News> queryByPage(
             @RequestParam(defaultValue = "1") int pageNum,
             @RequestParam(defaultValue = "10") int pageSize) {
         PageHelper.startPage(pageNum, pageSize);  // 启动分页
@@ -111,7 +111,7 @@ public class NewsFacade {
      * @param pageSize
      * @return
      */
-    public PageInfo<Activity_enroll> queryByPage(
+    public PageInfo<Activity_enroll> Activity_enrollqueryByPage(
             @RequestParam(defaultValue = "1") int pageNum,
             @RequestParam(defaultValue = "10") int pageSize) {
         PageHelper.startPage(pageNum, pageSize);  // 启动分页

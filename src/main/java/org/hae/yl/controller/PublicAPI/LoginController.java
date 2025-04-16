@@ -16,7 +16,7 @@ import javax.annotation.Resource;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/publicapi/login")
+@RequestMapping("/publicapi")
 public class LoginController {
 
     @Resource

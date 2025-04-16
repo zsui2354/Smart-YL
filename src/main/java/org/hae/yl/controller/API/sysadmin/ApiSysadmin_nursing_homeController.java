@@ -13,7 +13,37 @@ import java.util.List;
 public class ApiSysadmin_nursing_homeController {
 
     @Resource
-    private Nursing_HomeFacade facade;
+    private Nursing_HomeFacade nursinghomefacade;
+
+
+
+    /**
+     * 获取单个机构详细信息
+     * @param id
+     * @return
+     */
+    @GetMapping("/SelectById")
+    public Nursing_home SelectById(int id){
+        return nursinghomefacade.SelectById(id);
+    }
+
+    /**
+     * 获取某机构下所有服务项目
+     */
+    @GetMapping("/getOrgServiceList")
+    public List<Nursing_home> getOrgServiceList(int home_id){
+        return nursinghomefacade.getOrgServiceList(home_id);
+    }
+
+    /**
+     * 地图搜索机构，根据关键词或位置信息查询
+     * @param name
+     * @return
+     */
+    @PostMapping("/mapSearchInstitutions")
+    public Nursing_home mapSearchInstitutions(String name){
+        return nursinghomefacade.mapSearchInstitutions(name);
+    }
 
     /**
      * 查询所有
@@ -21,7 +51,7 @@ public class ApiSysadmin_nursing_homeController {
      */
     @GetMapping("/query")
     public List<Nursing_home> queryAll() {
-        return facade.queryAll();
+        return nursinghomefacade.queryAll();
     }
 
     /**
@@ -31,7 +61,7 @@ public class ApiSysadmin_nursing_homeController {
      */
     @GetMapping("/querylike")
     public List<Nursing_home> queryLike(String like) {
-        return facade.queryByLike(like);
+        return nursinghomefacade.queryByLike(like);
     }
 
     /**
@@ -43,7 +73,7 @@ public class ApiSysadmin_nursing_homeController {
     @GetMapping("/list")
     public PageInfo<Nursing_home> list(@RequestParam(defaultValue = "1") int pageNum,
                                        @RequestParam(defaultValue = "10") int pageSize) {
-        return facade.queryByPage(pageNum, pageSize);
+        return nursinghomefacade.queryByPage(pageNum, pageSize);
     }
 
     /**
@@ -52,7 +82,7 @@ public class ApiSysadmin_nursing_homeController {
      */
     @PostMapping("updateById")
     public void UpdateById(@RequestBody Nursing_home nursing_home) {
-        facade.Update(nursing_home.getId() , nursing_home);
+        nursinghomefacade.Update(nursing_home.getId() , nursing_home);
     }
 
     /**
@@ -61,7 +91,7 @@ public class ApiSysadmin_nursing_homeController {
      */
     @PostMapping("/add")
     public void Insert(@RequestBody Nursing_home nursingHome) {
-        facade.Insert(nursingHome);
+        nursinghomefacade.Insert(nursingHome);
     }
 
 
@@ -71,7 +101,7 @@ public class ApiSysadmin_nursing_homeController {
      */
     @PostMapping("/deleteById")
     public void DeleteById(@RequestBody Nursing_home nursing_home) {
-        facade.DeleteById(nursing_home.getId());
+        nursinghomefacade.DeleteById(nursing_home.getId());
     }
 
     /**
@@ -80,6 +110,6 @@ public class ApiSysadmin_nursing_homeController {
      */
     @PostMapping("/deleteBybatch")
     public void DeleteByBatch(@RequestBody List<Integer> ids) {
-        facade.DeleteBybatch(ids);
+        nursinghomefacade.DeleteBybatch(ids);
     }
 }

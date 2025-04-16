@@ -4,7 +4,10 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.hae.yl.entity.Health_record;
 import org.hae.yl.entity.Login_log;
+import org.hae.yl.entity.Service_appointment;
+import org.hae.yl.mapper.Service_appointmentMapper;
 import org.hae.yl.service.Health_recordService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -21,6 +24,14 @@ public class Health_recordFacade {
 
     @Resource
     private Health_recordService health_recordService;
+
+
+
+    @Resource
+    private SericeFacade sericeFacade;
+    @Autowired
+    private Service_appointmentMapper service_appointmentMapper;
+
 
     /**
      * 分页查询
@@ -60,7 +71,7 @@ public class Health_recordFacade {
     }
 
     /**
-     * 获取某指标的折线图数据（体温、血压等）
+     * 获取ID用户的折线图体征数据（体温、血压等）
      * @param id
      * @return
      */
@@ -68,14 +79,13 @@ public class Health_recordFacade {
         return health_recordService.SelectAllSignsData(id);
     }
 
-
     /**
      * 健康异常预警检测（如高血压、发热等
-     * @param id
+     * @param UserId
      * @return 风险等级（0=正常，1=轻度异常，2=中度异常，3=严重异常，4=危急异常）
      */
-    public int HealthAbnormalityWarning(int id){
-        Health_record health_record = SelectByIdEndSelection(id);
+    public int HealthAbnormalityWarning(int UserId){
+        Health_record health_record = SelectByIdEndSelection(UserId);   //获取用户最近一次健康打卡状态
         String blood_pressure = health_record.getBlood_pressure();  //血压
         int heart_rate = health_record.getHeart_rate();             //心率
         BigDecimal temperature = health_record.getTemperature();    //体温
@@ -114,9 +124,12 @@ public class Health_recordFacade {
     }
 
     //健康异常处理  判定等级自动发送处理工单
-    public void HealthAbnormalityWarning_work(int id){
-        int level = HealthAbnormalityWarning(id);
+    public void HealthAbnormalityWarning_work(int id,Service_appointment service_appointment){
+        int level = HealthAbnormalityWarning(id);     //健康异常预警检测（如高血压、发热等
         //风险等级（0=正常，1=轻度异常，2=中度异常，3=严重异常，4=危急异常）
+
+        Service_appointment serviceAppointment = new Service_appointment();
+        serviceAppointment.setUser_id(id);
 
         switch (level){
             case 1:
@@ -126,14 +139,20 @@ public class Health_recordFacade {
             case 2:
                 //中度异常
                 // 开工单体检
+                serviceAppointment.setService_id(12);
+                sericeFacade.submitAppointment(service_appointment);
                 break;
             case 3:
                 //严重异常
                 // 开工单体检，就医
+                serviceAppointment.setService_id(13);
+                sericeFacade.submitAppointment(service_appointment);
                 break;
             case 4:
                 //危急异常
                 // 紧急就医/通知家属
+                serviceAppointment.setService_id(11);
+                sericeFacade.submitAppointment(service_appointment);
                 break;
             default:
                 //正常
