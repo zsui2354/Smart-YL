@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/comadmin/")
+@RequestMapping("/api/sysadmin/issues")
 public class ApiSysadmin_IssuesController {
 
     @Resource

@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/comadmin/")
+@RequestMapping("/api/comadmin/issues")
 public class ApiComadmin_IssuesController {
 
     @Resource

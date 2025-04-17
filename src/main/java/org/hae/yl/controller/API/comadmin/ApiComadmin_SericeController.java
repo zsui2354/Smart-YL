@@ -14,7 +14,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/comadmin/")
+@RequestMapping("/api/comadmin/service")
 public class ApiComadmin_SericeController {
 
     @Resource

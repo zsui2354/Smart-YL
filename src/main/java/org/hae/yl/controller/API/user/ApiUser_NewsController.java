@@ -3,12 +3,10 @@ package org.hae.yl.controller.API.user;
 import com.github.pagehelper.PageInfo;
 import org.hae.yl.entity.Activity;
 import org.hae.yl.entity.Activity_enroll;
+import org.hae.yl.entity.Announcement;
 import org.hae.yl.entity.News;
 import org.hae.yl.facade.NewsFacade;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -23,9 +21,10 @@ public class ApiUser_NewsController {
      * 分页查询 获取新闻列表
      * @return
      */
-    @GetMapping("/newsquerypage")
-    public PageInfo<News> NewsqueryByPage(){
-        return newsFacade.NewsqueryByPage(1,10);
+    @GetMapping("/list")
+    public PageInfo<News> queryByPage(@RequestParam(defaultValue = "1") int pageNum,
+                                              @RequestParam(defaultValue = "10") int pageSize) {
+        return newsFacade.queryByPage(pageNum, pageSize);
     }
 
     /**

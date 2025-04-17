@@ -2,13 +2,11 @@ package org.hae.yl.controller.API.user;
 
 import com.github.pagehelper.PageInfo;
 import org.hae.yl.dto.DiscussionDetailDTO;
+import org.hae.yl.entity.Announcement;
 import org.hae.yl.entity.Comment;
 import org.hae.yl.entity.Discussion;
 import org.hae.yl.facade.IssuesFacade;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -25,9 +23,12 @@ public class ApiUser_IssuesController {
      * 查询所有讨论列表（分页）
      */
     @GetMapping("/getDiscussionsqueryByPage")
-    public PageInfo<Discussion> DiscussionsqueryByPage(){
-        return issuesFacade.DiscussionsqueryByPage(1,10);
+    public PageInfo<Discussion> queryByPage(@RequestParam(defaultValue = "1") int pageNum,
+                                              @RequestParam(defaultValue = "10") int pageSize) {
+        return issuesFacade.queryByPage(pageNum, pageSize);
     }
+
+
 
     /**
      * 创建一个新的议题（类似 GitHub Issue）

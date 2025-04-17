@@ -14,7 +14,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/comadmin/")
+@RequestMapping("/api/comadmin/news")
 public class ApiComadmin_NewsController {
 
     @Resource
@@ -74,7 +74,7 @@ public class ApiComadmin_NewsController {
      * @param pageSize
      * @return
      */
-    @GetMapping("/list")
+    @GetMapping("/huodonglist")
     public PageInfo<News> huodongqueryByPage(@RequestParam(defaultValue = "1") int pageNum,
                                               @RequestParam(defaultValue = "10") int pageSize) {
         return newsFacade.queryByPage(pageNum, pageSize);

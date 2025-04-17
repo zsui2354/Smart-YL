@@ -10,7 +10,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/comadmin/")
+@RequestMapping("/api/sysadmin/HealthRecird")
 public class ApiSysadmin_HealthRecirdController {
 
     @Resource

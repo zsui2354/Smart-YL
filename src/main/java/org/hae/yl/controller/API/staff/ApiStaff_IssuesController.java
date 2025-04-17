@@ -61,7 +61,7 @@ public class ApiStaff_IssuesController {
     /**
      * 查询对应ID议题中的所有评论的ID 集合
      */
-    @GetMapping("/SelectIssuesComment")
+    @GetMapping("/SelectIssuesCommentId")
     public List<Integer> SelectIssuesCommentId(int id){
         return issuesFacade.SelectIssuesCommentId(id);
     }

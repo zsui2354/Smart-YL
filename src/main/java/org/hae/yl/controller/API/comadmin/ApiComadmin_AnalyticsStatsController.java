@@ -11,7 +11,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/staff/analytics")
+@RequestMapping("/api/comadmin/analytics")
 public class ApiComadmin_AnalyticsStatsController {
 
     @Resource

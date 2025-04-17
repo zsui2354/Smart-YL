@@ -9,7 +9,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/comadmin/announcement")
+@RequestMapping("/api/sysadmin/announcement")
 public class ApiSysadmin_AnnouncementController {
 
 
