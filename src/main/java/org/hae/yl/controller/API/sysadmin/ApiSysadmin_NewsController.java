@@ -9,16 +9,13 @@ import org.hae.yl.facade.NewsFacade;
 import org.hae.yl.facade.SericeFacade;
 import org.hae.yl.service.ActivityService;
 import org.hae.yl.service.Activity_enrollService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
 
 @RestController
-@RequestMapping("//api/sysadmin/news")
+@RequestMapping("/api/sysadmin/news")
 public class ApiSysadmin_NewsController {
 
     @Resource
@@ -40,6 +37,7 @@ public class ApiSysadmin_NewsController {
     /**
      * 获取新闻详情
      */
+    @GetMapping("/getNewsDetail")
     public String getNewsDetail(int id){
         return newsFacade.getNewsDetail(id);
     }
@@ -47,6 +45,7 @@ public class ApiSysadmin_NewsController {
     /**
      *  发布新闻（管理员）
      */
+    @PostMapping("/Insert")
     public void Insert(News news){
         newsFacade.Insert(news);
     }
@@ -54,6 +53,7 @@ public class ApiSysadmin_NewsController {
     /**
      *  根据 Id 删除新闻（管理员）
      */
+    @PostMapping("/DeleteById")
     public void DeleteById(int id){
         newsFacade.DeleteById(id);
     }
@@ -62,6 +62,7 @@ public class ApiSysadmin_NewsController {
      * 根据 Id 批量删除新闻（管理员）
      * @param ids
      */
+    @PostMapping("/DeleteByIdbatch")
     public void DeleteByIdbatch(List<Integer> ids){
         newsFacade.DeleteByIdbatch(ids);
     }
@@ -69,6 +70,7 @@ public class ApiSysadmin_NewsController {
     /**
      * 发布活动信息（管理员）
      */
+    @PostMapping("/ActivityInsert")
     public void ActivityInsert(Activity activity){
         newsFacade.ActivityInsert(activity);
     }
@@ -79,7 +81,7 @@ public class ApiSysadmin_NewsController {
      * @param pageSize
      * @return
      */
-    @GetMapping("/list")
+    @GetMapping("/Activitylist")
     public PageInfo<Activity>Activitylist(@RequestParam(defaultValue = "1") int pageNum,
                                @RequestParam(defaultValue = "10") int pageSize) {
         return newsFacade.ActivityqueryByPage(pageNum, pageSize);
@@ -88,6 +90,7 @@ public class ApiSysadmin_NewsController {
     /**
      * 获取活动详情
      */
+    @GetMapping("/ActivitySelectById")
     public String ActivitySelectById(int id){
         return newsFacade.ActivitySelectById(id);
     }
@@ -98,13 +101,9 @@ public class ApiSysadmin_NewsController {
      * @param pageSize
      * @return
      */
-    @GetMapping("/list")
+    @GetMapping("/Activity_enrolllist")
     public PageInfo<Activity_enroll> Activity_enrolllist(@RequestParam(defaultValue = "1") int pageNum,
                                                          @RequestParam(defaultValue = "10") int pageSize) {
         return newsFacade.Activity_enrollqueryByPage(pageNum, pageSize);
     }
-
-
-
-
 }

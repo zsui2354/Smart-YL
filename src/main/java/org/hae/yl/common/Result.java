@@ -1,5 +1,6 @@
 package org.hae.yl.common;
 
+
 import org.hae.yl.common.Enums.ResultCodeEnum;
 
 public class Result {

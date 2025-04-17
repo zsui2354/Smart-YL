@@ -85,6 +85,4 @@ public class AnnouncementFacade {
     public void Update(int id, Announcement announcement){
         announcementService.Update(id, announcement);
     }
-
-
 }

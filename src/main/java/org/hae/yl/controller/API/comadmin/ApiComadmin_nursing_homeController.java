@@ -82,4 +82,5 @@ public class ApiComadmin_nursing_homeController {
     public void DeleteByBatch(@RequestBody List<Integer> ids) {
         facade.DeleteBybatch(ids);
     }
+
 }

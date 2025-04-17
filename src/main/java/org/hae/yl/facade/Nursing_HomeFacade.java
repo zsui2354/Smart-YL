@@ -101,6 +101,7 @@ public class Nursing_HomeFacade {
      *  增加
      */
     public void Insert(Nursing_home nursing_home) {
+
         nursing_homeService.insert(nursing_home);
     }
 }

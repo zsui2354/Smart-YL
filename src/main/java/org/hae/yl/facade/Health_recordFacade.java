@@ -48,7 +48,7 @@ public class Health_recordFacade {
     }
 
     /**
-     * 用户每日健康打卡记录
+     * 用户每日健康打卡登记
      */
     public void Insert(Health_record health_record){
         health_recordService.Insert(health_record);
