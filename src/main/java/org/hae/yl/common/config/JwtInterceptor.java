@@ -15,16 +15,19 @@ import org.hae.yl.facade.UserFacade;
 import org.mybatis.logging.Logger;
 import org.mybatis.logging.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import static org.hae.yl.Util.JwtUtil.validateToken;
+
 @Configuration
 public class JwtInterceptor implements HandlerInterceptor {
 
-    private static final Logger log = LoggerFactory.getLogger(JwtInterceptor.class);        //创建一个 日志记录器
+    //private static final Logger log = LoggerFactory.getLogger(JwtInterceptor.class);        //创建一个 日志记录器
 
     @Resource
     private RoleFacade roleFacade;
@@ -37,9 +40,34 @@ public class JwtInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         System.out.println("拦截器触发 ~~~~~~~~~~");
 
+        if (HttpMethod.OPTIONS.toString().equals(request.getMethod())) {
+            System.out.println("检测到 OPTION请求，放行");
+            return true;
+        }
+
+        if (HttpMethod.OPTIONS.toString().equals(request.getMethod())) {
+            System.out.println("OPTIONS请求，放行");
+            return true;
+        }
+
         String requestURI = request.getRequestURI();       // 正确获取 URI
         System.out.println("Request URI: " + requestURI);  // 打印请求路径，用于调试
-        String token = request.getHeader(Constants.TOKEN); //从请求头获取 token
+
+
+        String token ="";
+        if (request.getMethod().equals("OPTIONS")){
+            return true;
+        } else{
+            token = request.getHeader(Constants.TOKEN); //从请求头获取 token
+        }
+
+       // String token = request.getHeader(Constants.TOKEN); //从请求头获取 token
+        System.out.println("拦截器获取token: " + token);
+
+        //验证 token 是否有效
+        if(!validateToken(token)){
+            throw new CustomException(ResultCodeEnum.PERMISSION_DENIED); // 没有权限
+        }
 
         User user = userfacade.getUserInfo(request,token);   // 获取用户信息
         try{
@@ -62,19 +90,22 @@ public class JwtInterceptor implements HandlerInterceptor {
                 }
                 switch (Integer.parseInt(roleEntity.getId())){
                     case 1: // 普通用户（老人、家属）
-                        if (!request.getRequestURI().startsWith("/front")) {
+                        if (!request.getRequestURI().startsWith("/api/user")) {
                             throw new CustomException(ResultCodeEnum.PERMISSION_DENIED); // 没有权限
                         }
                         break;
                     case 2: // 社区管理员(常务管理，客服)
-                        if (!request.getRequestURI().startsWith("/front") && !request.getRequestURI().startsWith("/manager")) {
+                        if (!request.getRequestURI().startsWith("/api/comadmin") && !request.getRequestURI().startsWith("/manager")) {
                             throw new CustomException(ResultCodeEnum.PERMISSION_DENIED); // 没有权限
                         }
                         break;
                     case 3: // 系统管理员
+                        if (!request.getRequestURI().startsWith("/api/sysadmin")){
+                            throw new CustomException(ResultCodeEnum.PERMISSION_DENIED); // 没有权限
+                        }
                         break;
                     case 4: // 职工（护工，医生）
-                        if (!request.getRequestURI().startsWith("/work")) {
+                        if (!request.getRequestURI().startsWith("/api/sstaff") && !request.getRequestURI().startsWith("/manager")) {
                             throw new CustomException(ResultCodeEnum.PERMISSION_DENIED); // 没有权限
                         }
                         break;

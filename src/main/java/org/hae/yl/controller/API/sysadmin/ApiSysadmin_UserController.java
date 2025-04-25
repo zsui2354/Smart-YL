@@ -2,10 +2,13 @@ package org.hae.yl.controller.API.sysadmin;
 
 import com.github.pagehelper.PageInfo;
 import org.hae.yl.entity.Login_log;
+import org.hae.yl.entity.Nursing_home;
 import org.hae.yl.entity.Role;
 import org.hae.yl.entity.User;
 import org.hae.yl.facade.UserFacade;
 import org.hae.yl.model.Userparameter;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -22,14 +25,24 @@ public class ApiSysadmin_UserController {
 
     /**
      * 获取当前用户信息
-     * @param request
+     * @param
      * @param token
      * @return
      */
-    @GetMapping("/getUserInfo")
-    public User getUserInfo(HttpServletRequest request, String token){
+    @GetMapping("/getUserInfoToken")
+    public User getUserInfo(HttpServletRequest request,@RequestParam String token){
+        System.out.println("token 内容 ：" + token);
         return userFacade.getUserInfo(request,token);
     }
+
+    @GetMapping("/getUser")
+    public User getUserInfoJWT(HttpServletRequest request) {
+        String token = request.getHeader("Authorization");
+        System.out.println("Controller 层 输出测试 token 内容：：："+token);
+        return userFacade.getUserInfo(request, token);
+    }
+
+    @GetMapping("/getUserInfo")
     public User getUserInfo(HttpServletRequest request){
         return userFacade.getUserInfo(request);
     }
@@ -56,9 +69,11 @@ public class ApiSysadmin_UserController {
      * 分页查询 用户列表
      * @return
      */
-    @GetMapping("/queryByPage")
-    public PageInfo<User> queryByPage(){
-        return userFacade.queryByPage(1,10);
+    @GetMapping("/list")
+    public PageInfo<User> list(@RequestParam(defaultValue = "1") int pageNum,
+                               @RequestParam(defaultValue = "10") int pageSize) {
+        System.out.println(pageNum +":"+ pageSize);
+        return userFacade.queryByPage(pageNum, pageSize);
     }
 
     //查询所有用户
@@ -85,23 +100,11 @@ public class ApiSysadmin_UserController {
         userFacade.Update(id,user);
     }
 
-    //根据 Id 删除
-    @PostMapping("/Delete")
-    public void Delete(int id){
-        userFacade.Delete(id);
-    }
-
-    //根据 Id 批量删除
-    @PostMapping("/DeleteBybatch")
-    public void DeleteBybatch(List<Integer> ids){
-        userFacade.DeleteBybatch(ids);
-    }
-
-    //添加
-    @PostMapping("/Insert")
-    public void Insert(User user){
-        userFacade.Insert(user);
-    }
+//    //添加
+//    @PostMapping("/Insert")
+//    public void Insert(User user){
+//        userFacade.Insert(user);
+//    }
 
 
     //####################################################################

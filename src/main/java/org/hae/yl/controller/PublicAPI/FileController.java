@@ -19,7 +19,7 @@ import java.util.List;
  * 文件接口
  */
 @RestController
-@RequestMapping("/files")
+@RequestMapping("/publicapi/files")
 public class FileController {
 
     // 文件上传存储路径

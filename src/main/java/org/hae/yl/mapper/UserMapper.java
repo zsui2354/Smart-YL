@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 //import org.apache.ibatis.annotations.Result;
 //import org.apache.ibatis.annotations.Results;
 //import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Param;
 import org.hae.yl.entity.User;
 
 import java.util.List;
@@ -56,7 +57,7 @@ public interface UserMapper extends BaseMapper<User> {
     /**
      * 根据 Id 批量删除
      */
-    public void DeleteBybatch(List<Integer> ids);
+    public void DeleteBybatch(@Param("ids") List<Integer> ids);
 
     /**
      * 添加

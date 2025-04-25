@@ -54,7 +54,7 @@
     </delete>
 
     <select id="SelectAll" resultType="org.hae.yl.entity.Discussion">
-        SELECT * FROM discussion;
+        SELECT * FROM discussion
     </select>
 
     <select id="SelectById" resultType="org.hae.yl.entity.Discussion">

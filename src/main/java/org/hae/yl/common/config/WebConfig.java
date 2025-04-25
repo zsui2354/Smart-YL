@@ -18,22 +18,22 @@ public class WebConfig implements WebMvcConfigurer {
         System.out.println("注册拦截器...。。。。。。。。。");
         // 添加拦截器，并指定拦截路径
         registry.addInterceptor(jwtInterceptor)
-                .addPathPatterns("/**")     // 拦截所有路径
+                .addPathPatterns("/api/**")
                 .excludePathPatterns(
-                        "/publicapi/**", // 排除所有 /publicapi/ 开头的接口
-                        "/api/**",
-                        "/error",        // Spring 默认错误页面
-                        "/favicon.ico"   // 防止浏览器请求图标被拦截
-                )
-                .order(0);
+                        "/api/**",              //这个是经过 JWT 拦截器拦截并判断 身份权限的 Controller 接口
+                        "/publicapi/**",        //这个是公开Controller接口不需要拦截，登录授权 和 token 验证在这里
+                        "/files/**",            //文件访问路径 在这里
+                        "/error",
+                        "/favicon.ico"
+                );
     }
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")  // 允许跨域的路径
-                .allowedOrigins("http://localhost:8080")  // 允许的来源
-                .allowedMethods("GET", "POST", "PUT", "DELETE")  // 允许的请求方法
-                .allowedHeaders("*")  // 允许的请求头
-                .allowCredentials(true);  // 是否允许发送Cookie信息
+        registry.addMapping("/**")                               // 允许跨域的路径
+                .allowedOrigins("http://localhost:8080")                   // 允许的来源
+                .allowedMethods("GET", "POST", "PUT", "DELETE","OPTIONS")  // 允许的请求方法
+                .allowedHeaders("*")                                       // 允许的请求头
+                .allowCredentials(true);                                   // 是否允许发送Cookie信息
     }
 }

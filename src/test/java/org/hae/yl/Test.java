@@ -22,10 +22,7 @@ public class Test {
          * 3 . 测试JWT功能
      */
 
-    @Test
-    public void test(){
-        System.out.println("test");
-    }
+
     private long time = 1000 * 60 * 60 * 24;
     private String signature = "admin";         //key 密钥
 

@@ -4,6 +4,7 @@ import cn.hutool.core.util.ObjectUtil;
 import com.auth0.jwt.JWT;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.ibatis.annotations.Param;
 import org.hae.yl.Util.JwtUtil;
 import org.hae.yl.common.Constants;
 import org.hae.yl.common.Enums.ResultCodeEnum;
@@ -129,21 +130,36 @@ public class UserFacade {
             token = request.getParameter(Constants.TOKEN);
         }
 
+
+
         // 2. 开始执行认证
         if (ObjectUtil.isEmpty(token)) {
+            System.out.println("[ERROR] Token is empty  "+  token);
             throw new CustomException(ResultCodeEnum.TOKEN_INVALID_ERROR);
         }
-        String userRole = JWT.decode(token).getAudience().get(0);
-        String userId = userRole.split("-")[0];
-        String role = userRole.split("-")[1];
+        System.out.println("token格式检查: "+token);
 
-        System.out.println("解密后的 :" +userRole);
+        String userInfo = JWT.decode(token).getClaim("userInfo").asString(); // 提取 userInfo
+        if (userInfo == null) {
+            System.out.println("userInfo claim is missing or null.");
+        }
+
+        String[] parts = userInfo.split("-");
+        String userId = parts[0];  // userId
+        String role = parts[1];     // role
+
+//        String userRole = JWT.decode(token).getAudience().get(0);
+//        String userId = userRole.split("-")[0];
+//        String role = userRole.split("-")[1];
+
+        System.out.println("解密后的 :" +userInfo);
         System.out.println("Id :"+userId);
         System.out.println("role :"+role);
 
         User user = null;
-        // 通过 userId 查找用户
-        user = (User) userService.SelectById(Integer.parseInt(userId));
+        // 通过 用户名 查找用户
+        user = userService.SelectByUsername(userId);                        //根据用户名
+        //user = (User) userService.SelectById(Integer.parseInt(userId));   //根据 IDD
         System.out.println("用户数据预览  :" + user.toString());
         return user;
     }
@@ -160,6 +176,7 @@ public class UserFacade {
         if (ObjectUtil.isEmpty(token)) {
             // 如果没拿到，从参数里再拿一次
             token = request.getParameter(Constants.TOKEN);
+
         }
 
         // 2. 开始执行认证
@@ -258,7 +275,7 @@ public class UserFacade {
     }
 
     //根据 Id 批量删除
-    public void DeleteBybatch(List<Integer> ids){
+    public void DeleteBybatch(@Param("ids") List<Integer> ids){
         userService.DeleteBybatch(ids);
     }
 

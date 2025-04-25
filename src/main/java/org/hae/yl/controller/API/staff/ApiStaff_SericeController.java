@@ -50,7 +50,7 @@ public class ApiStaff_SericeController {
     }
 
     /**
-     * 管理员为预约任务分配工作人员(职工)
+     * 为预约任务分配工作人员(职工)
      * @param userId
      * @param serviceId
      * @param Datatime

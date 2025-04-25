@@ -65,6 +65,7 @@
         </foreach>
     </delete>
 
+
     <select id="SelectAll" resultType="org.hae.yl.entity.User" resultMap="UserResultMap">
         SELECT * FROM user
     </select>

@@ -8,11 +8,16 @@ import java.util.UUID;
 
 @Component
 public class JwtUtil {
+    private static String JwtFormatHeader = ">>> [ JwtUtil ] ";
+
     private static final String SECRET = "my_jwt_secret_key";
     private static final long EXPIRATION = 1000 * 60 * 60 * 24; // 1天
 
     // 生成 Token
         public static String generateToken(String username ,String password,int role) {
+            String userInfo = username + "-" + role;  // 拼接 userId 和 role
+
+
         return Jwts.builder()
             //Header 部分
                 .setSubject("admin-test")                                         //主题
@@ -20,9 +25,10 @@ public class JwtUtil {
                 .setHeaderParam("type", "JWT")                              //类型
                 .setHeaderParam("algo", "hs256")                            //加密算法
             //Payload 载荷部分
-                .claim("username", username)
-                //.claim("password", password)
-                .claim("role", role)
+                .claim("userInfo", userInfo)                                   // 将 userInfo 存储到 claim 中
+               // .claim("password", password)
+//                .claim("username", username)
+//                .claim("role", role)
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION))
                 .setId(UUID.randomUUID().toString())                              //为生成的 JWT 设置一个随机的，唯一的 UUID 字符串（标识符）
             //Signature 签名
@@ -47,7 +53,7 @@ public class JwtUtil {
             if (token == null){
                 return false;
             }
-            System.out.println("验证 Token 是否有效 ： "+
+            System.out.println(JwtFormatHeader + "验证 Token 是否有效 ： "+
                     Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token)
             );
         } catch (Exception e) {

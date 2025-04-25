@@ -16,7 +16,7 @@ public class VerifyController {
 
     @PostMapping("/routerverify")
     public boolean routerverify(@RequestHeader("Authorization") String token) {
-        System.out.println("token 验证 ："+
+        System.out.println("公开接口的 token 验证 ："+
                 token
         );
         return validateToken(token);
