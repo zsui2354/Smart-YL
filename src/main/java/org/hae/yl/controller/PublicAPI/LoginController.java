@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @CrossOrigin
@@ -23,9 +24,9 @@ public class LoginController {
     UserFacade facade;
 
     @PostMapping("/auth")
-    public ResponseEntity<?> auth(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<?> auth(HttpServletRequest request, @RequestBody LoginRequest loginRequest) {
         System.out.println("请求到达登录授权接口~~~~");
-        return facade.Loginauth(loginRequest);
+        return facade.Loginauth(request,loginRequest);
     }
 
     @PostMapping("/register")
@@ -33,4 +34,6 @@ public class LoginController {
         System.out.println("请求到达注册接口~~~~");
         return facade.register(registerRequest);
     }
+
+
 }

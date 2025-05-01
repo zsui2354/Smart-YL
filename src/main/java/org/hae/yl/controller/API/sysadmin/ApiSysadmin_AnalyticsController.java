@@ -68,7 +68,7 @@ public class ApiSysadmin_AnalyticsController {
     }
 
     /**
-     * 获取当前用户的所有 Issues 记录
+     * 获取当前用户的所有 Issues 记录  （P）
      */
     @GetMapping("/CurrentUserIssuesTotal")
     public List<Discussion> CurrentUserIssuesTotal(int id){

@@ -36,7 +36,7 @@ public interface Health_recordMapper extends BaseMapper<Health_record> {
     /**
      * 根据 Id 修改
      */
-    void Update(int id, Health_record health_record);
+    void Update(Health_record health_record);
 
     /**
      * 根据 Id 删除

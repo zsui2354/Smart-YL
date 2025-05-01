@@ -70,7 +70,7 @@ public class ApiStaff_nursing_homeController {
      * @return
      */
     @GetMapping("/mapSearchInstitutions")
-    public Nursing_home mapSearchInstitutions(String name){
+    public List<Nursing_home> mapSearchInstitutions(String name){
         return nursing_homeFacade.mapSearchInstitutions(name);
     }
 }

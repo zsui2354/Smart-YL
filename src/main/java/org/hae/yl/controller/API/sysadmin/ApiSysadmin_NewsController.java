@@ -63,7 +63,7 @@ public class ApiSysadmin_NewsController {
      * @param ids
      */
     @PostMapping("/DeleteByIdbatch")
-    public void DeleteByIdbatch(List<Integer> ids){
+    public void DeleteByIdbatch(@RequestBody List<Integer> ids){
         newsFacade.DeleteByIdbatch(ids);
     }
 
@@ -71,7 +71,7 @@ public class ApiSysadmin_NewsController {
      * 发布活动信息（管理员）
      */
     @PostMapping("/ActivityInsert")
-    public void ActivityInsert(Activity activity){
+    public void ActivityInsert(@RequestBody Activity activity){
         newsFacade.ActivityInsert(activity);
     }
 
@@ -91,7 +91,7 @@ public class ApiSysadmin_NewsController {
      * 获取活动详情
      */
     @GetMapping("/ActivitySelectById")
-    public String ActivitySelectById(int id){
+    public Activity ActivitySelectById(int id){
         return newsFacade.ActivitySelectById(id);
     }
 

@@ -20,14 +20,12 @@
             title,
             content,
             type,
-            target_role,
-            created_at,
+            target_role
         ) values (
-            #{Announcement.title},
-            #{Announcement.content},
-            #{Announcement.type},
-            #{Announcement.target_role},
-            #{Announcement.created_at}
+            #{title},
+            #{content},
+            #{type},
+            #{target_role}
         )
     </insert>
 

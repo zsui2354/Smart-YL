@@ -26,31 +26,28 @@
             phone,
             avatar,
             role_id,
-            status,
-            created_at
+            status
         )values (
-            #{user.username},
-            #{user.password},
-            #{user.real_name},
-            #{user.phone},
-            #{user.avatar},
-            #{user.role_id},
-            #{user.status},
-            #{user.created_at}
+            #{username},
+            #{password},
+            #{real_name},
+            #{phone},
+            #{avatar},
+            #{role_id},
+            #{status}
         )
     </insert>
 
     <update id="Update">
-        UPDATE  user
-        SET username    = #{user.username},
-            password    = #{user.password},
-            real_name   = #{user.real_name},
-            phone   = #{user.phone},
-            avatar  = #{user.avatar},
+        UPDATE user
+        SET username = #{user.username},
+            password = #{user.password},
+            real_name = #{user.real_name},
+            phone = #{user.phone},
+            avatar = #{user.avatar},
             role_id = #{user.role_id},
-            status  = #{user.status},
-            created_at  = #{user.created_at}
-        where id = #{user.id}
+            status = #{user.status}
+        WHERE id = #{user.id}
     </update>
 
     <delete id="Delete">
@@ -64,7 +61,6 @@
             #{id}
         </foreach>
     </delete>
-
 
     <select id="SelectAll" resultType="org.hae.yl.entity.User" resultMap="UserResultMap">
         SELECT * FROM user

@@ -22,16 +22,16 @@ public class ApiStaff_IssuesController {
      * 创建一个新的议题（类似 GitHub Issue）
      */
     @PostMapping("/createDiscussion")
-    public void createDiscussion(int userId, String title, String content){
-        issuesFacade.createDiscussion(userId, title, content);
+    public void createDiscussion(@RequestBody Discussion discussion){
+        issuesFacade.createDiscussion(discussion);
     }
 
     /**
      * 给某个讨论添加评论
      */
     @PostMapping("/addComment")
-    public void addComment(int discussionId, int userId, String content){
-        issuesFacade.addComment(discussionId, userId, content);
+    public void addComment(@RequestBody Comment comment){
+        issuesFacade.addComment(comment);
     }
 
     /**

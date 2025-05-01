@@ -32,7 +32,7 @@ public class ApiSysadmin_HealthRecirdController {
      * 用户每日健康打卡记录
      */
     @PostMapping("/Insert")
-    public void Insert(Health_record health_record){
+    public void Insert(@RequestBody Health_record health_record){
         health_recordFacade.Insert(health_record);
     }
 
@@ -65,7 +65,7 @@ public class ApiSysadmin_HealthRecirdController {
     }
 
     /**
-     * 健康异常预警检测（如高血压、发热等
+     * 健康异常预警检测（如高血压、发热等    (正常来说不开放这个接口)
      * @param UserId
      * @return 风险等级（0=正常，1=轻度异常，2=中度异常，3=严重异常，4=危急异常）
      */
@@ -74,10 +74,13 @@ public class ApiSysadmin_HealthRecirdController {
         return health_recordFacade.HealthAbnormalityWarning(UserId);
     }
 
-    //健康异常处理  判定等级自动发送处理工单
+    /**
+     * 健康异常处理  判定等级自动发送处理工单
+     * @param id
+     */
     @GetMapping("/HealthAbnormalityWarning_work")
-    public void HealthAbnormalityWarning_work(int id, Service_appointment service_appointment){
-        health_recordFacade.HealthAbnormalityWarning_work(id, service_appointment);
+    public void HealthAbnormalityWarning_work(int id){
+        health_recordFacade.HealthAbnormalityWarning_work(id);
     }
 
     /**
@@ -92,8 +95,8 @@ public class ApiSysadmin_HealthRecirdController {
      * 根据 Id 修改
      */
     @PostMapping("/Update")
-    public void Update(int id, Health_record health_record){
-        health_recordFacade.Update(id, health_record);
+    public void Update(@RequestBody Health_record health_record){
+        health_recordFacade.Update(health_record);
     }
 
     /**
@@ -105,7 +108,7 @@ public class ApiSysadmin_HealthRecirdController {
     }
 
     /**
-     * 根据 Id 批量删除
+     * 根据 Id 批量删除  (P)
      */
     @PostMapping("/DeleteByIdbatch")
     public void DeleteByIdbatch(List<Integer> ids){

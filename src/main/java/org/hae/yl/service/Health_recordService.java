@@ -33,7 +33,7 @@ public interface Health_recordService {
     /**
      * 根据 Id 修改
      */
-    void Update(int id, Health_record health_record);
+    void Update(Health_record health_record);
 
     /**
      * 根据 Id 删除

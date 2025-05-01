@@ -58,7 +58,7 @@ public class ApiStaff_NewsController {
      * 获取活动详情
      */
     @GetMapping("/ActivitySelectById")
-    public String ActivitySelectById(int id){
+    public Activity ActivitySelectById(int id){
         return newsFacade.ActivitySelectById(id);
     }
 

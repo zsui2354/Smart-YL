@@ -1,5 +1,6 @@
 package org.hae.yl.service.Impl;
 
+import org.apache.ibatis.annotations.Param;
 import org.hae.yl.entity.User;
 import org.hae.yl.mapper.UserMapper;
 import org.hae.yl.service.UserService;
@@ -41,9 +42,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void Update(int id,User user) {
-        usermapper.Update(id,user);
-    }
+    public void Update(int id,User user) {usermapper.Update(id,user);}
 
     @Override
     public void Delete(int id) {

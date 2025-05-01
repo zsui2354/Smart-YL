@@ -2,6 +2,7 @@ package org.hae.yl.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.hae.yl.entity.Nursing_home;
 
 import java.util.List;
@@ -27,7 +28,7 @@ public interface Nursing_homeMapper extends BaseMapper<Nursing_home> {
     /**
      *  根据 Id 修改
      */
-    void Update(int id, Nursing_home nursing_home);
+    void Update(@Param("id")int id, @Param("nursing_home") Nursing_home nursing_home);
 
     /**
      *  根据 Id 删除

@@ -9,10 +9,12 @@ import org.hae.yl.mapper.Service_appointmentMapper;
 import org.hae.yl.service.Health_recordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -50,8 +52,16 @@ public class Health_recordFacade {
     /**
      * 用户每日健康打卡登记
      */
-    public void Insert(Health_record health_record){
-        health_recordService.Insert(health_record);
+    public void Insert(@RequestBody Health_record health_record){
+        Health_record Hd = new Health_record();
+
+        Hd.setUser_id(health_record.getUser_id());
+        Hd.setBlood_pressure(health_record.getBlood_pressure());
+        Hd.setHeart_rate(health_record.getHeart_rate());
+        Hd.setTemperature(health_record.getTemperature());
+        Hd.setRemark(health_record.getRemark());
+
+        health_recordService.Insert(Hd);
     }
 
     /**
@@ -111,7 +121,7 @@ public class Health_recordFacade {
             else if (sbp >= 140 || dbp >= 90) riskLevel = Math.max(riskLevel, 1);  // 高血压Ⅰ级
             else if (sbp < 90 || dbp < 60) riskLevel = Math.max(riskLevel, 2);     // 低血压
         } catch (Exception e) {
-            // 血压格式异常，略过处理（或可加入日志）
+            // 血压格式异常，略过处理（或加入日志）
         }
 
         // ========== 心率判断 ==========
@@ -120,16 +130,19 @@ public class Health_recordFacade {
         else if (heart_rate > 120) riskLevel = Math.max(riskLevel, 2);   // 中度过快
         else if (heart_rate > 100) riskLevel = Math.max(riskLevel, 1);   // 轻度过快
 
+        System.out.println(">> [ 健康检测 ]检测到 风险等级 ：" + riskLevel);
         return riskLevel;
     }
 
     //健康异常处理  判定等级自动发送处理工单
-    public void HealthAbnormalityWarning_work(int id,Service_appointment service_appointment){
+    public void HealthAbnormalityWarning_work(int id){
         int level = HealthAbnormalityWarning(id);     //健康异常预警检测（如高血压、发热等
         //风险等级（0=正常，1=轻度异常，2=中度异常，3=严重异常，4=危急异常）
 
-        Service_appointment serviceAppointment = new Service_appointment();
-        serviceAppointment.setUser_id(id);
+        Service_appointment sA = new Service_appointment();
+        sA.setUser_id(id);
+        sA.setStatus(0);
+        sA.setAppointment_time(LocalDateTime.now());
 
         switch (level){
             case 1:
@@ -139,20 +152,23 @@ public class Health_recordFacade {
             case 2:
                 //中度异常
                 // 开工单体检
-                serviceAppointment.setService_id(12);
-                sericeFacade.submitAppointment(service_appointment);
+                sA.setService_id(12);
+                sA.setNote("二次体检");
+                sericeFacade.submitAppointment(sA);
                 break;
             case 3:
                 //严重异常
                 // 开工单体检，就医
-                serviceAppointment.setService_id(13);
-                sericeFacade.submitAppointment(service_appointment);
+                sA.setService_id(13);
+                sA.setNote("就医干预");
+                sericeFacade.submitAppointment(sA);
                 break;
             case 4:
                 //危急异常
                 // 紧急就医/通知家属
-                serviceAppointment.setService_id(11);
-                sericeFacade.submitAppointment(service_appointment);
+                sA.setService_id(11);
+                sA.setNote("紧急就医并通知家属");
+                sericeFacade.submitAppointment(sA);
                 break;
             default:
                 //正常
@@ -174,8 +190,17 @@ public class Health_recordFacade {
     /**
      * 根据 Id 修改
      */
-    public void Update(int id, Health_record health_record){
-        health_recordService.Update(id, health_record);
+    public void Update(@RequestBody Health_record health_record){
+        Health_record Hd = new Health_record();
+
+        Hd.setId(health_record.getId());
+        Hd.setUser_id(health_record.getUser_id());
+        Hd.setBlood_pressure(health_record.getBlood_pressure());
+        Hd.setHeart_rate(health_record.getHeart_rate());
+        Hd.setTemperature(health_record.getTemperature());
+        Hd.setRemark(health_record.getRemark());
+
+        health_recordService.Update(Hd);
     }
 
     /**

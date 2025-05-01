@@ -3,6 +3,7 @@ package org.hae.yl.controller.API.comadmin;
 import com.github.pagehelper.PageInfo;
 import org.hae.yl.entity.Nursing_home;
 import org.hae.yl.facade.Nursing_HomeFacade;
+import org.hae.yl.model.Nursinghomeparameter;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -51,7 +52,7 @@ public class ApiComadmin_nursing_homeController {
      * @param nursing_home
      */
     @PostMapping("updateById")
-    public void UpdateById(@RequestBody Nursing_home nursing_home) {
+    public void UpdateById(@RequestBody Nursinghomeparameter nursing_home) {
         facade.Update(nursing_home.getId() , nursing_home);
     }
 
@@ -60,7 +61,7 @@ public class ApiComadmin_nursing_homeController {
      * @param nursingHome
      */
     @PostMapping("/add")
-    public void Insert(@RequestBody Nursing_home nursingHome) {
+    public void Insert(@RequestBody Nursinghomeparameter nursingHome) {
         facade.Insert(nursingHome);
     }
 

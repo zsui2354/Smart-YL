@@ -40,15 +40,16 @@ public class ApiUser_NewsController {
      * @return
      */
     @GetMapping("/Activityquerypage")
-    public PageInfo<Activity> ActivityqueryByPage(){
-        return newsFacade.ActivityqueryByPage(1,10);
+    public PageInfo<Activity> ActivityqueryByPage(@RequestParam(defaultValue = "1") int pageNum,
+                                      @RequestParam(defaultValue = "10") int pageSize) {
+        return newsFacade.ActivityqueryByPage(pageNum, pageSize);
     }
 
     /**
      * 获取活动详情
      */
     @GetMapping("/getActivityinfo")
-    public String ActivitySelectById(int id){
+    public Activity ActivitySelectById(int id){
         return newsFacade.ActivitySelectById(id);
     }
 
@@ -57,15 +58,16 @@ public class ApiUser_NewsController {
      * @return
      */
     @GetMapping("/activity_enrollquerypage")
-    public PageInfo<Activity_enroll> Activity_enrollqueryByPage(){
-        return newsFacade.Activity_enrollqueryByPage(1,10);
+    public PageInfo<Activity_enroll> Activity_enrollqueryByPage(@RequestParam(defaultValue = "1") int pageNum,
+                                                  @RequestParam(defaultValue = "10") int pageSize) {
+        return newsFacade.Activity_enrollqueryByPage(pageNum, pageSize);
     }
 
     /**
      * 用户报名参加活动
      */
     @PostMapping("/activity_enrollInsert")
-    public void activityEnrollInsert(Activity_enroll activity_enroll){
+    public void activityEnrollInsert(@RequestBody Activity_enroll activity_enroll){
         newsFacade.activityEnrollInsert(activity_enroll);
     }
 

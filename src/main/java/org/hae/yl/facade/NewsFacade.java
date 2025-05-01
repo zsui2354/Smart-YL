@@ -10,6 +10,7 @@ import org.hae.yl.service.ActivityService;
 import org.hae.yl.service.Activity_enrollService;
 import org.hae.yl.service.NewsService;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
@@ -80,7 +81,31 @@ public class NewsFacade {
      * 发布活动信息（管理员）
      */
     public void ActivityInsert(Activity activity){
-        activityService.Insert(activity);
+
+        Activity Ay = new Activity();
+        Ay.setTitle(activity.getTitle());
+        Ay.setContent(activity.getContent());
+        Ay.setPlace(activity.getPlace());
+        Ay.setStart_time(activity.getStart_time());
+        Ay.setEnd_time(activity.getEnd_time());
+        Ay.setMax_participants(activity.getMax_participants());
+
+        /**
+         *
+         *
+         * {
+         *     "title": "五一联欢",
+         *     "content": "五一联欢，请来社区老人来一起",
+         *     "place": "老头乐活动中心",
+         *     "start_time": "2025-04-30 08:00:00",
+         *     "end_time": "2025-05-10 00:00:00",
+         *     "max_participants": 50
+         * }
+         *
+         *
+         *
+         */
+        activityService.Insert(Ay);
     }
 
     /**
@@ -100,9 +125,9 @@ public class NewsFacade {
     /**
      * 获取活动详情
      */
-    public String ActivitySelectById(int id){
+    public Activity ActivitySelectById(int id){
         Activity activity = activityService.SelectById(id);
-        return activity.getContent();
+        return activity;
     }
 
     /**
@@ -122,8 +147,14 @@ public class NewsFacade {
     /**
      * 用户报名参加活动
      */
-    public void activityEnrollInsert(Activity_enroll activity_enroll){
-        activityEnrollService.Insert(activity_enroll);
+    public void activityEnrollInsert(@RequestBody Activity_enroll activity_enroll){
+
+        Activity_enroll Al = new Activity_enroll();
+        Al.setUser_id(activity_enroll.getUser_id());
+        Al.setActivity_id(activity_enroll.getActivity_id());
+        Al.setEnrolled_at(activity_enroll.getEnrolled_at());
+
+        activityEnrollService.Insert(Al);
     }
 
     /**

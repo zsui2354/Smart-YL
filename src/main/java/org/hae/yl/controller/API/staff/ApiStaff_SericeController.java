@@ -50,15 +50,10 @@ public class ApiStaff_SericeController {
     }
 
     /**
-     * 为预约任务分配工作人员(职工)
-     * @param userId
-     * @param serviceId
-     * @param Datatime
-     * @param status
-     * @param note
+     * 插入服务预约的数据 （但是这个接口貌似不是那么需要）
      */
     @PostMapping("/assignStaffToBooking")
-    public void assignStaffToBooking(int userId,int serviceId,String Datatime,int status ,String note){
-        sericeFacade.assignStaffToBooking(userId,serviceId,Datatime,status,note);
+    public void assignStaffToBooking(@RequestBody Service_appointment appointment){
+        sericeFacade.assignStaffToBooking(appointment);
     }
 }

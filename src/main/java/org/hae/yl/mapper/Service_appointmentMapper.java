@@ -2,6 +2,7 @@ package org.hae.yl.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.hae.yl.entity.Service_appointment;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public interface Service_appointmentMapper extends BaseMapper<Service_appointmen
     /**
      * 查询 对应用户的预约记录
      */
-    List<Service_appointment> AppointmentRecord(int userId,int ServicesStatus);
+    List<Service_appointment> AppointmentRecord(@Param("userId") int userId,@Param("ServicesStatus") int ServicesStatus);
 
     /**
      * 查询最受欢迎服务排行（按预约次数降序）

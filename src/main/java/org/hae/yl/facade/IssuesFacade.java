@@ -14,6 +14,7 @@ import org.hae.yl.service.DiscussionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.filter.RequestContextFilter;
 
@@ -38,15 +39,26 @@ public class IssuesFacade {
     /**
      * 创建一个新的议题（类似 GitHub Issue）
      */
-    public void createDiscussion(int userId, String title, String content) {
-        discussionService.createDiscussion(userId, title, content);
+    public void createDiscussion(@RequestBody Discussion Issues) {
+
+        Discussion Dn = new Discussion();
+
+        Dn.setTitle(Issues.getTitle());
+        Dn.setContent(Issues.getContent());
+        Dn.setCreator_id(Issues.getCreator_id());
+        discussionService.Insert(Dn);
     }
 
     /**
      * 给某个讨论添加评论
      */
-    public void addComment(int discussionId, int userId, String content) {
-        conmentService.addComment(discussionId, userId, content);
+    public void addComment(@RequestBody Comment comment) {
+
+        Comment Ct = new Comment();
+        Ct.setDiscussion_id(comment.getDiscussion_id());
+        Ct.setUser_id(comment.getUser_id());
+        Ct.setContent(comment.getContent());
+        conmentService.Insert(Ct);
     }
 
     /**
@@ -58,16 +70,19 @@ public class IssuesFacade {
 
         // 组装 DTO
         DiscussionDetailDTO dto = new DiscussionDetailDTO();
-        dto.setTitle(discussion.getTitle());
-        dto.setContent(discussion.getContent());
-        dto.setCreatedBy(discussion.getCreator_id());
-        dto.setCreatedAt(discussion.getCreated_at());
+        dto.setTitle(discussion.getTitle());            //议题 标题
+        dto.setContent(discussion.getContent());        //议题 内容
+        dto.setCreatedBy(discussion.getCreator_id());   //议题 创建者
+        dto.setCreatedAt(discussion.getCreated_at());   //议题 创建时间
+
+
+        System.out.println(discussion.toString());
 
         List<CommentDTO> commentDTOList = commentList.stream().map(comment -> {
             CommentDTO c = new CommentDTO();
-            c.setContent(comment.getContent());
-            c.setCreatedBy(comment.getUser_id());
-            c.setCreatedAt(comment.getCreated_at());
+            c.setContent(comment.getContent());         //评论内容
+            c.setCreatedBy(comment.getUser_id());       //评论创建者
+            c.setCreatedAt(comment.getCreated_at());    //评论创建时间
             return c;
         }).collect(Collectors.toList());
         dto.setComments(commentDTOList);
@@ -81,14 +96,18 @@ public class IssuesFacade {
         User user = userFacade.getUserInfo(request);        //获取当前用户信息
         Comment comment = conmentService.SelectById(id);    //获取当前评论信息
 
+        System.out.println("C :" + comment.toString());
+        //System.out.println(comment.getUser_id() +"  :  "+ user.getId());
+
+
         if (comment.getUser_id() == user.getId()) {//评论发布人ID 和 当前请求人ID是否一致
             conmentService.DeleteById(id);
         }
-        if (user.getRole_id() != 3 || user.getRole_id() != 2) {//是否是管理员
+        if (user.getRole_id() == 3 || user.getRole_id() == 2) {//是否是管理员
             // TODO: 角色判断是否是管理员
-            throw new RuntimeException("无权限删除");
+            conmentService.DeleteById(id);
         }
-        conmentService.DeleteById(id);
+        throw new RuntimeException("无权限删除");
     }
 
     /**
@@ -112,24 +131,40 @@ public class IssuesFacade {
         User user = userFacade.getUserInfo(request);                 //获取当前用户信息
         Discussion discussion = discussionService.SelectById(id);    //获取当前议题信息
 
-        if(discussion.getCreator_id() == user.getId()){
-            // 先删评论（避免外键约束错误）
-            conmentService.DeleteByIdbatch(
-                    SelectIssuesCommentId(discussion.getCreator_id())
-            );
-            // 再删讨论
-            discussionService.DeleteById(discussion.getCreator_id());
+
+        boolean isOwner = discussion.getCreator_id().equals(user.getId());
+        boolean isAdmin = (user.getRole_id() == 2 || user.getRole_id() == 3); // 假设2/3是管理员角色
+
+        if (isOwner || isAdmin) {
+            // 删除评论
+            conmentService.DeleteByIdbatch(SelectIssuesCommentId(discussion.getId()));
+            // 删除议题
+            discussionService.DeleteById(discussion.getId());
+            return;
         }
-        if (user.getRole_id() != 3 || user.getRole_id() != 2) {//是否是管理员
-            // TODO: 角色判断是否是管理员
-            throw new RuntimeException("无权限删除");
-        }
-        // 先删评论（避免外键约束错误）
-        conmentService.DeleteByIdbatch(
-                SelectIssuesCommentId(discussion.getCreator_id())
-        );
-        // 再删讨论
-        discussionService.DeleteById(discussion.getCreator_id());
+
+
+//        if(discussion.getCreator_id() == user.getId()){
+//            // 先删评论（避免外键约束错误）
+//            conmentService.DeleteByIdbatch(
+//                    SelectIssuesCommentId(discussion.getCreator_id())
+//            );
+//            // 再删讨论
+//            discussionService.DeleteById(discussion.getCreator_id());
+//            return;
+//        }
+//        if (user.getRole_id() == 3 || user.getRole_id() == 2) {//是否是管理员
+//            // TODO: 角色判断是否是管理员
+//            // 先删评论（避免外键约束错误）
+//            conmentService.DeleteByIdbatch(
+//                    SelectIssuesCommentId(discussion.getCreator_id())
+//            );
+//            // 再删讨论
+//            discussionService.DeleteById(discussion.getCreator_id());
+//            return;
+//        }
+        throw new RuntimeException("无权限删除");
+
     }
 
     /**

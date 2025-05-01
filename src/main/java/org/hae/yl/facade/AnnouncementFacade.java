@@ -39,8 +39,14 @@ public class AnnouncementFacade {
     /**
      * 发布公告（系统、机构、社区）（管理员权限）
      */
-    public void publishNotice(Announcement announcement) {
-        announcementService.Insert(announcement);
+    public void publishNotice(@RequestBody Announcement announcement) {
+        Announcement At= new Announcement();
+        At.setTitle(announcement.getTitle());
+        At.setContent(announcement.getContent());
+        At.setType(announcement.getType());
+        At.setTarget_role(announcement.getTarget_role());
+
+        announcementService.Insert(At);
     };
 
     /**

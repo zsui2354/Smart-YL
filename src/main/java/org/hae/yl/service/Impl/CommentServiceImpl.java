@@ -54,13 +54,4 @@ public class CommentServiceImpl implements CommentService {
     public void DeleteByIdbatch(List<Integer> ids) {
         contentMapper.DeleteByIdbatch(ids);
     }
-
-    @Override
-    public void addComment(int discussionId, int userId, String content) {
-        Comment content1 = new Comment();
-        content1.setContent(content);
-        content1.setUser_id(userId);
-        content1.setDiscussion_id(discussionId);
-        contentMapper.Insert(content1);
-    }
 }

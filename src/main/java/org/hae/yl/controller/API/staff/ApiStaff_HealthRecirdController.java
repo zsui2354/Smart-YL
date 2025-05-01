@@ -69,7 +69,7 @@ public class ApiStaff_HealthRecirdController {
 
     //健康异常处理  判定等级自动发送处理工单
     @PostMapping("/HealthAbnormalityWarning_work")
-    public void HealthAbnormalityWarning_work(int id, Service_appointment service_appointment){
-        health_recordFacade.HealthAbnormalityWarning_work(id, service_appointment);
+    public void HealthAbnormalityWarning_work(int id){
+        health_recordFacade.HealthAbnormalityWarning_work(id);
     }
 }

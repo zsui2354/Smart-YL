@@ -16,13 +16,10 @@
     <insert id="Insert">
         INSERT INTO Activity_enroll(
             user_id,
-            activity_id,
-            enrolled_at
+            activity_id
         ) values (
-            #{Activity_enroll.id},
-            #{Activity_enroll.user_id},
-            #{Activity_enroll.activity_id},
-            #{Activity_enroll.enrolled_at}
+            #{user_id},
+            #{activity_id}
         )
     </insert>
 

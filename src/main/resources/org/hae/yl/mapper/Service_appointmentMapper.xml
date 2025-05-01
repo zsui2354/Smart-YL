@@ -21,14 +21,14 @@
             user_id ,
             service_id ,
             appointment_time ,
-            statusn,
+            status,
             note
         ) values (
-            #{Service_appointment.user_id},
-            #{Service_appointment.service_id},
-            #{Service_appointment.appointment_time},
-            #{Service_appointment.status},
-            #{Service_appointment.note}
+            #{user_id},
+            #{service_id},
+            #{appointment_time},
+            #{status},
+            #{note}
         )
     </insert>
 
@@ -63,10 +63,11 @@
     </select>
 
     <select id="AppointmentRecord" resultType="org.hae.yl.entity.Service_appointment">
-        SELECT * FROM Service_appointment Where user_id = #{userId} AND status = #{ServiceStatus}
+        SELECT * FROM Service_appointment
+                 Where user_id = #{userId} AND status = #{ServicesStatus}
     </select>
 
-    <select id="GetpH" resultType="org.hae.yl.entity.Service_appointment">
+    <select id="GetpH" resultType="org.hae.yl.entity.Service_appointment" resultMap="Service_appointmentResultMap">
         SELECT
             si.id AS service_id,
             si.name AS service_name,

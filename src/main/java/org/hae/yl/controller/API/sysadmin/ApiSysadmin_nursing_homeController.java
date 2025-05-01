@@ -1,8 +1,10 @@
 package org.hae.yl.controller.API.sysadmin;
 
 import com.github.pagehelper.PageInfo;
+import org.apache.ibatis.annotations.Param;
 import org.hae.yl.entity.Nursing_home;
 import org.hae.yl.facade.Nursing_HomeFacade;
+import org.hae.yl.model.Nursinghomeparameter;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -36,12 +38,12 @@ public class ApiSysadmin_nursing_homeController {
     }
 
     /**
-     * 地图搜索机构，根据关键词或位置信息查询
+     * 地图搜索机构，根据关键词模糊查询
      * @param name
      * @return
      */
     @PostMapping("/mapSearchInstitutions")
-    public Nursing_home mapSearchInstitutions(String name){
+    public List<Nursing_home> mapSearchInstitutions(String name){
         return nursinghomefacade.mapSearchInstitutions(name);
     }
 
@@ -59,10 +61,10 @@ public class ApiSysadmin_nursing_homeController {
      * @param like
      * @return
      */
-    @GetMapping("/querylike")
-    public List<Nursing_home> queryLike(String like) {
-        return nursinghomefacade.queryByLike(like);
-    }
+//    @GetMapping("/querylike")
+//    public List<Nursing_home> queryLike(String like) {
+//        return nursinghomefacade.queryByLike(like);
+//    }
 
     /**
      * 分页查询接口
@@ -81,8 +83,8 @@ public class ApiSysadmin_nursing_homeController {
      * @param nursing_home
      */
     @PostMapping("updateById")
-    public void UpdateById(@RequestBody Nursing_home nursing_home) {
-        nursinghomefacade.Update(nursing_home.getId() , nursing_home);
+    public void UpdateById(@RequestBody Nursinghomeparameter nursing_home) {
+        nursinghomefacade.Update(nursing_home.getId(), nursing_home);
     }
 
     /**
@@ -90,7 +92,7 @@ public class ApiSysadmin_nursing_homeController {
      * @param nursingHome
      */
     @PostMapping("/add")
-    public void Insert(@RequestBody Nursing_home nursingHome) {
+    public void Insert(@RequestBody Nursinghomeparameter nursingHome) {
         nursinghomefacade.Insert(nursingHome);
     }
 
@@ -100,7 +102,7 @@ public class ApiSysadmin_nursing_homeController {
      * @param nursing_home
      */
     @PostMapping("/deleteById")
-    public void DeleteById(@RequestBody Nursing_home nursing_home) {
+    public void DeleteById(@RequestBody Nursinghomeparameter nursing_home) {
         nursinghomefacade.DeleteById(nursing_home.getId());
     }
 

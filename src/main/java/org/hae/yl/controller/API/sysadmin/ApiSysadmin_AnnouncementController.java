@@ -32,7 +32,7 @@ public class ApiSysadmin_AnnouncementController {
      * 发布公告（系统、机构、社区）（管理员权限）
      */
     @PostMapping("/publishNotice")
-    public void publishNotice(Announcement announcement){
+    public void publishNotice(@RequestBody Announcement announcement){
         announcementFacade.publishNotice(announcement);
     }
 

@@ -41,26 +41,25 @@
     </insert>
 
     <update id="Update">
-        update table Nursing_home
+        update Nursing_home
         SET name = #{nursing_home.name},
             address = #{nursing_home.address},
             phone = #{nursing_home.phone},
             description = #{nursing_home.description},
             longitude = #{nursing_home.longitude},
             latitude = #{nursing_home.latitude},
-            level = #{nursing_home.level},
-            created_at = #{nursing_home.created_at}
-        where id = #{id}
+            level = #{nursing_home.level}
+        where id = #{nursing_home.id}
     </update>
     
     <delete id="DeleteById">
         DELETE from Nursing_home where id = #{id}
     </delete>
     
-    <delete id="DeleteByIdbatch">
+    <delete id="DeleteByIdbatch" parameterType="java.util.List">
         DELETE FROM Nursing_home
         WHERE id IN
-        <foreach collection="ids" item="id" open="(" separator="," close=")">
+        <foreach collection="list" item="id" open="(" separator="," close=")">
             #{id}
         </foreach>
     </delete>
@@ -76,7 +75,6 @@
     <select id="SelectByLike" resultType="org.hae.yl.entity.Nursing_home" resultMap="Nursing_homeResultMap">
         SELECT * FROM nursing_home
         WHERE name LIKE CONCAT('%', #{like}, '%')
-           OR description LIKE CONCAT('%', #{like}, '%')
     </select>
 
     <select id="getOrgServiceList" resultType="org.hae.yl.entity.Nursing_home">

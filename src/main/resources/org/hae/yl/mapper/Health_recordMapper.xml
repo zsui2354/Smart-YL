@@ -20,29 +20,26 @@
     <insert id="Insert">
         INSERT INTO Health_record(
             user_id,
-            date,
             blood_pressure,
             heart_rate,
             temperature,
             remark
         ) values (
-            #{Health_record.user_id},
-            #{Health_record.date},
-            #{Health_record.blood_pressure},
-            #{Health_record.heart_rate},
-            #{Health_record.temperature},
-            #{Health_record.remark}
+            #{user_id},
+            #{blood_pressure},
+            #{heart_rate},
+            #{temperature},
+            #{remark}
         )
     </insert>
 
     <update id="Update">
-        update table Health_record
-        SET user_id = #{Health_record.user_id},
-            date = #{Health_record.date},
-            blood_pressure = #{Health_record.blood_pressure},
-            heart_rate = #{Health_record.heart_rate},
-            temperature = #{Health_record.temperature},
-            remark = #{Health_record.remark}
+        update Health_record
+        SET user_id = #{user_id},
+            blood_pressure = #{blood_pressure},
+            heart_rate = #{heart_rate},
+            temperature = #{temperature},
+            remark = #{remark}
         where id = #{id}
     </update>
 
@@ -66,12 +63,16 @@
         select * from Health_record where id = #{id}
     </select>
 
-    <select id="SelectByIdEndSelection" resultType="org.hae.yl.entity.Health_record">
-        SELECT * FROM health_record WHERE id = #{id} ORDER BY date ASC LIMIT 1;
+    <select id="SelectByIdEndSelection" resultType="org.hae.yl.entity.Health_record" resultMap="Health_recordResultMap">
+        SELECT * FROM health_record WHERE user_id = #{id} ORDER BY date desc LIMIT 1;
     </select>
 
-    <select id="SelectAllSignsData" resultType="org.hae.yl.entity.Health_record">
-        Select blood_pressure,heart_rate,temperature from health_record where id = #{id};
+    <select id="SelectAllSignsData" resultMap="Health_recordResultMap">
+        SELECT *
+        FROM health_record
+        WHERE user_id = #{id}
+        ORDER BY date DESC
+            LIMIT 5;
     </select>
 
 

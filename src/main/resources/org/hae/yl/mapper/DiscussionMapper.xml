@@ -19,15 +19,11 @@
         INSERT INTO discussion(
             title,
             content,
-            creator_id,
-            created_at,
-            updated_at
-        ) values (
+            creator_id
+        ) VALUES (
             #{title},
             #{content},
-            #{creator_id},
-            #{created_at},
-            #{updated_at}
+            #{creator_id}
         )
     </insert>
 
@@ -36,7 +32,6 @@
         SET title = #{discussion.title},
             content = #{discussion.content},
             creator_id = #{discussion.creator_id},
-            created_at = #{discussion.created_at},
             updated_at = #{discussion.updated_at}
         where id = #{id}
     </update>
@@ -53,19 +48,19 @@
         </foreach>
     </delete>
 
-    <select id="SelectAll" resultType="org.hae.yl.entity.Discussion">
+    <select id="SelectAll" resultType="org.hae.yl.entity.Discussion" resultMap="DiscussionResultMap">
         SELECT * FROM discussion
     </select>
 
-    <select id="SelectById" resultType="org.hae.yl.entity.Discussion">
+    <select id="SelectById" resultType="org.hae.yl.entity.Discussion" resultMap="DiscussionResultMap">
         SELECT * FROM discussion WHERE id = #{id}
     </select>
 
-    <select id="IssuesTotal" resultType="org.hae.yl.entity.Discussion">
+    <select id="IssuesTotal" resultType="int">
         SELECT COUNT(*) FROM discussion
     </select>
 
-    <select id="CurrentUserIssuesTotal" resultType="org.hae.yl.entity.Discussion">
+    <select id="CurrentUserIssuesTotal" resultType="org.hae.yl.entity.Discussion" resultMap="DiscussionResultMap">
         SELECT * FROM discussion Where id = #{id}
     </select>
 

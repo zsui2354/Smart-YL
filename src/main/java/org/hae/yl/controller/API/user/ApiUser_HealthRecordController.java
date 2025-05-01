@@ -1,13 +1,11 @@
 package org.hae.yl.controller.API.user;
 
 import com.github.pagehelper.PageInfo;
+import org.hae.yl.entity.Discussion;
 import org.hae.yl.entity.Health_record;
 import org.hae.yl.entity.Service_appointment;
 import org.hae.yl.facade.Health_recordFacade;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -24,15 +22,17 @@ public class ApiUser_HealthRecordController {
      * @return
      */
     @GetMapping("/healthrecordqueryByPage")
-    public PageInfo<Health_record> queryByPage(){
-        return health_recordFacade.queryByPage(1,10);
+    public PageInfo<Health_record> queryByPage(@RequestParam(defaultValue = "1") int pageNum,
+                                               @RequestParam(defaultValue = "10") int pageSize) {
+        return health_recordFacade.queryByPage(pageNum, pageSize);
     }
+
 
     /**
      * 用户每日健康打卡记录
      */
     @PostMapping("/healthrecordInsert")
-    public void Insert(Health_record health_record){
+    public void Insert(@RequestBody Health_record health_record){
         health_recordFacade.Insert(health_record);
     }
 
@@ -76,7 +76,7 @@ public class ApiUser_HealthRecordController {
 
     //健康异常处理  判定等级自动发送处理工单
     @GetMapping("/HealthAbnormalityWarning_work")
-    public void HealthAbnormalityWarning_work(int id, Service_appointment service_appointment){
-        health_recordFacade.HealthAbnormalityWarning_work(id, service_appointment);
+    public void HealthAbnormalityWarning_work(int id){
+        health_recordFacade.HealthAbnormalityWarning_work(id);
     }
 }

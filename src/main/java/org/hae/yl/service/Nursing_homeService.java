@@ -46,5 +46,10 @@ public interface Nursing_homeService {
      */
     List<Nursing_home> getOrgServiceList(int home_id);
 
-    Nursing_home mapSearchInstitutions(String name);
+    /**
+     *
+     * @param name
+     * @return
+     */
+    List<Nursing_home> mapSearchInstitutions(String name);
 }

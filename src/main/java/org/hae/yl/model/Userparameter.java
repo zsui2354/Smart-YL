@@ -13,5 +13,5 @@ public class Userparameter{
     private String        avatar;              //头像链接
     private int           role_id;             //角色Id
     private int           status;              //账户状态信息
-    private LocalDateTime created_at;          //创建时间
+    //private LocalDateTime created_at;          //创建时间
 }

@@ -56,7 +56,7 @@ public class Nursing_homeServiceImpl implements Nursing_homeService {
     }
 
     @Override
-    public Nursing_home mapSearchInstitutions(String name) {
-        return (Nursing_home) nursing_homeMapper.SelectByLike(name);
+    public List<Nursing_home> mapSearchInstitutions(String name) {
+        return nursing_homeMapper.SelectByLike(name);
     }
 }

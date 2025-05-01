@@ -35,6 +35,11 @@ public class ApiSysadmin_UserController {
         return userFacade.getUserInfo(request,token);
     }
 
+    /**
+     * 获取当前用户信息
+     * @param request
+     * @return
+     */
     @GetMapping("/getUser")
     public User getUserInfoJWT(HttpServletRequest request) {
         String token = request.getHeader("Authorization");
@@ -42,19 +47,30 @@ public class ApiSysadmin_UserController {
         return userFacade.getUserInfo(request, token);
     }
 
-    @GetMapping("/getUserInfo")
-    public User getUserInfo(HttpServletRequest request){
-        return userFacade.getUserInfo(request);
-    }
+
+//    @GetMapping("/getUserInfo")
+//    public User getUserInfo(HttpServletRequest request){
+//        return userFacade.getUserInfo(request);
+//    }
 
     /**
-     * 更新用户个人资料
+     * 更新当前用户个人资料
      * @return
      */
     @PostMapping("/Modify_UserInformation")
     public void Modify_UserInformation(HttpServletRequest request ,@RequestBody Userparameter requestBody){
         userFacade.Modify_UserInformation(request,requestBody);
     }
+
+
+    /**
+     * 根据 ID 更新用户资料
+     */
+    @PostMapping("/Change_UserInformation")
+    public void Change_UserInformation(@RequestBody User requestBody){
+        userFacade.Change_UserInformation(requestBody);
+    }
+
 
     /**
      * 查询当前用户登录日志（登录时间、IP等）
@@ -64,6 +80,11 @@ public class ApiSysadmin_UserController {
     public List<Login_log> getLoginLogs(HttpServletRequest request){
         return userFacade.getLoginLogs(request);
     }
+
+
+
+
+
 
     /**
      * 分页查询 用户列表

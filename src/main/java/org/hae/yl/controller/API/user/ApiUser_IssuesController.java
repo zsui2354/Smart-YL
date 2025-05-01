@@ -34,16 +34,16 @@ public class ApiUser_IssuesController {
      * 创建一个新的议题（类似 GitHub Issue）
      */
     @PostMapping("/createIssues")
-    public void createDiscussion(int userId, String title, String content){
-        issuesFacade.createDiscussion(userId, title, content);
+    public void createDiscussion(@RequestBody Discussion discussion){
+        issuesFacade.createDiscussion(discussion);
     }
 
     /**
      * 根据 ID 给讨论添加评论
      */
     @GetMapping("/addcomment")
-    public void addComment(int discussionId, int userId, String content){
-        issuesFacade.addComment(discussionId, userId, content);
+    public void addComment(@RequestBody Comment comment){
+        issuesFacade.addComment(comment);
     }
 
     /**

@@ -19,13 +19,11 @@
         INSERT INTO Login_log(
             user_id,
             ip_address,
-            login_time,
             user_agent
         ) values (
-            #{Login_log.user_id},
-            #{Login_log.ip_address},
-            #{Login_log.login_time},
-            #{Login_log.user_agent}
+            #{user_id},
+            #{ip_address},
+            #{user_agent}
         )
     </insert>
 

@@ -58,10 +58,11 @@ public class SericeFacade {
     }
 
     /**
-     * 用户提交服务预约申请
+     * 提交服务预约申请
      * @param appointment 预约信息
      */
     public void submitAppointment(Service_appointment appointment) {
+
         service_appointmentService.Insert(appointment);
     }
 
@@ -83,13 +84,14 @@ public class SericeFacade {
     }
 
     //    管理员为预约任务分配工作人员(职工)
-    public void assignStaffToBooking(int userId,int serviceId,String Datatime,int status ,String note){
-        Service_appointment appointment = null;
-        appointment.setUser_id(userId);
-        appointment.setService_id(serviceId);
-        appointment.setAppointment_time(LocalDateTime.parse(Datatime));
-        appointment.setStatus(status);
-        appointment.setNote(note);
+    public void assignStaffToBooking(@RequestParam Service_appointment appointment){
+
+        Service_appointment At = new Service_appointment();
+        At.setUser_id(appointment.getUser_id());
+        At.setService_id(appointment.getService_id());
+        At.setAppointment_time(LocalDateTime.now());
+        At.setStatus(appointment.getStatus());
+        At.setNote(appointment.getNote());
 
         service_appointmentService.Insert(appointment);
     }

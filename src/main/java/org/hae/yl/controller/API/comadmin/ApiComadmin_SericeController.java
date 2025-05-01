@@ -5,10 +5,7 @@ import org.hae.yl.entity.Nursing_home;
 import org.hae.yl.entity.Service_appointment;
 import org.hae.yl.entity.Service_item;
 import org.hae.yl.facade.SericeFacade;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -74,7 +71,7 @@ public class ApiComadmin_SericeController {
     }
 
     //    管理员为预约任务分配工作人员(职工)
-    public void assignStaffToBooking(int userId,int serviceId,String Datatime,int status ,String note){
-        sericeFacade.assignStaffToBooking(userId,serviceId,Datatime,status,note);
+    public void assignStaffToBooking(@RequestBody Service_appointment appointment){
+        sericeFacade.assignStaffToBooking(appointment);
     }
 }

@@ -18,22 +18,20 @@
     </resultMap>
 
     <insert id="Insert">
-        INSERT INTO Nursing_home(
+        INSERT INTO Activity(
             title ,
             content ,
             place ,
-            start_timen,
+            start_time,
             end_time ,
-            max_participants ,
-            created_at ,
+            max_participants
         ) values (
-            #{Activity.title},
-            #{Activity.content},
-            #{Activity.place},
-            #{Activity.start_time},
-            #{Activity.end_time},
-            #{Activity.max_participants},
-            #{Activity.created_at}
+            #{title},
+            #{content},
+            #{place},
+            #{start_time},
+            #{end_time},
+            #{max_participants}
         )
     </insert>
 

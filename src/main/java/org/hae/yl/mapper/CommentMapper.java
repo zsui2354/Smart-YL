@@ -2,6 +2,7 @@ package org.hae.yl.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.hae.yl.entity.Comment;
 
 import java.util.List;
@@ -10,6 +11,8 @@ import java.util.List;
 public interface CommentMapper extends BaseMapper<Comment> {
 
     List<Comment> SelectAll();
+
+    Comment SelectById(Integer id);
 
     List<Comment> SelectByTheme(int id);
 
@@ -21,5 +24,7 @@ public interface CommentMapper extends BaseMapper<Comment> {
 
     void DeleteById(int id);
 
-    void DeleteByIdbatch(List<Integer> ids);
+    void DeleteByIdbatch(@Param("ids") List<Integer> ids);
+
+
 }

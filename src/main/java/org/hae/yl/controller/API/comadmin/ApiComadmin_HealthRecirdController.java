@@ -74,8 +74,8 @@ public class ApiComadmin_HealthRecirdController {
     }
 
     //健康异常处理  判定等级自动发送处理工单
-    public void HealthAbnormalityWarning_work(int id, Service_appointment service_appointment){
-        health_recordFacade.HealthAbnormalityWarning_work(id, service_appointment);
+    public void HealthAbnormalityWarning_work(int id){
+        health_recordFacade.HealthAbnormalityWarning_work(id);
     }
 
     /**
@@ -88,8 +88,8 @@ public class ApiComadmin_HealthRecirdController {
     /**
      * 根据 Id 修改
      */
-    public void Update(int id, Health_record health_record){
-        health_recordFacade.Update(id, health_record);
+    public void Update(Health_record health_record){
+        health_recordFacade.Update(health_record);
     }
 
     /**

@@ -47,7 +47,7 @@ public interface UserMapper extends BaseMapper<User> {
     /**
      * 根据 Id 修改
      */
-    public void Update(int id,User user);
+    public void Update(@Param("id") int id,@Param("user") User user);
 
     /**
      * 根据 Id 删除

@@ -15,6 +15,8 @@ import org.hae.yl.model.Userparameter;
 import org.hae.yl.service.Login_logService;
 import org.hae.yl.service.RoleService;
 import org.hae.yl.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -34,6 +36,7 @@ import java.util.List;
 @Component
 public class UserFacade {
 
+    private static final Logger log = LoggerFactory.getLogger(UserFacade.class);
     @Resource
     RoleService roleService;
 
@@ -50,8 +53,7 @@ public class UserFacade {
      */
     public ResponseEntity<?> register(@RequestBody Userparameter registerRequest ) {
         System.out.println("+ [业务层]  注册"+ registerRequest);
-        //获取用户输入的用户ID 和密码
-
+        //获取用户输入的注册信息
         String username  = registerRequest.getUsername();
         String password  = registerRequest.getPassword();
         String real_name = registerRequest.getReal_name();
@@ -59,10 +61,11 @@ public class UserFacade {
         String phone     = registerRequest.getPhone();
 
         // 看看有没有 取名冲突
-        User user_obj = userService.SelectByUsername(username);
-        if (user_obj != null) {
+        User user_temp = userService.SelectByUsername(username);
+        if (user_temp != null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
         }
+        User user_obj = new User();
         user_obj.setUsername(username);
         user_obj.setPassword(password);
         user_obj.setReal_name(real_name);
@@ -84,10 +87,35 @@ public class UserFacade {
 
 
     /**
+     * 获取客户端IP
+     * @param request
+     * @return
+     */
+    public static String getClientIpAddress(HttpServletRequest request) {
+        String ip = request.getHeader("X-Forwarded-For");
+        if (ip != null && ip.length() != 0 && !"unknown".equalsIgnoreCase(ip)) {
+            return ip.split(",")[0];  // 多个 IP，取第一个
+        }
+
+        ip = request.getHeader("Proxy-Client-IP");
+        if (ip != null && ip.length() != 0 && !"unknown".equalsIgnoreCase(ip)) {
+            return ip;
+        }
+
+        ip = request.getHeader("WL-Proxy-Client-IP");
+        if (ip != null && ip.length() != 0 && !"unknown".equalsIgnoreCase(ip)) {
+            return ip;
+        }
+
+        return request.getRemoteAddr();
+    }
+
+
+    /**
      * 登录授权
      * @return
      */
-    public ResponseEntity<?> Loginauth(@RequestBody LoginRequest loginRequest){
+    public ResponseEntity<?> Loginauth(HttpServletRequest request ,@RequestBody LoginRequest loginRequest){
         System.out.println("+ [业务层]  登录授权"+ loginRequest);
 
         // 1. 获取用户输入的用户名和密码
@@ -112,12 +140,22 @@ public class UserFacade {
                 user_obj.getPassword(),
                 user_obj.getRole_id()
         );
+
+        /**
+         * 在这里写 登录日志的添加数据 ， user_id , ip_address , login_time , user_agent
+         */
+        Login_log Lg = new Login_log();
+        Lg.setUser_id(user_obj.getId());
+        Lg.setIp_address(getClientIpAddress(request));
+        Lg.setUser_agent(request.getHeader("User-Agent"));
+        login_logService.Insert(Lg);
+
         System.out.println("token: "+token);
         return ResponseEntity.ok(new AuthResponse(token));
     }
 
     /**
-     * 获取当前用户信息
+     * 获取当前用户信息 (拦截器专用)
      * @param request
      * @param token
      * @return
@@ -129,7 +167,6 @@ public class UserFacade {
             // 如果没拿到，从参数里再拿一次
             token = request.getParameter(Constants.TOKEN);
         }
-
 
 
         // 2. 开始执行认证
@@ -156,6 +193,7 @@ public class UserFacade {
         System.out.println("Id :"+userId);
         System.out.println("role :"+role);
 
+
         User user = null;
         // 通过 用户名 查找用户
         user = userService.SelectByUsername(userId);                        //根据用户名
@@ -177,29 +215,77 @@ public class UserFacade {
             // 如果没拿到，从参数里再拿一次
             token = request.getParameter(Constants.TOKEN);
 
+            if (ObjectUtil.isEmpty(token)) {// 开始执行认证
+                throw new CustomException(ResultCodeEnum.TOKEN_INVALID_ERROR);
+            }
         }
 
-        // 2. 开始执行认证
-        if (ObjectUtil.isEmpty(token)) {
-            throw new CustomException(ResultCodeEnum.TOKEN_INVALID_ERROR);
-        }
-        String userRole = JWT.decode(token).getAudience().get(0);
-        String userId = userRole.split("-")[0];
-        String role = userRole.split("-")[1];
+//        // 2. 开始执行认证
+//        if (ObjectUtil.isEmpty(token)) {
+//            throw new CustomException(ResultCodeEnum.TOKEN_INVALID_ERROR);
+//        }
+        //String userRole = JWT.decode(token).getAudience().get(0);
 
-        System.out.println("解密后的 :" +userRole);
-        System.out.println("Id :"+userId);
-        System.out.println("role :"+role);
+//        String userRole = JWT.decode(token).getClaim("userInfo").asString();
+//        System.out.println("JWT 解析出来的 ："+userRole);
+//
+//
+//        String userId = userRole.split("-")[0];
+//        String role =  userRole.split("-")[1];
+//
+//        System.out.println("解密后的 :" +userRole);
+//        System.out.println("Id :"+userId);
+//        System.out.println("role :"+role);
+//
+//        User user = null;
+//        // 通过 userId 查找用户
+//        user = (User) userService.SelectById(Integer.parseInt(userId));
+//        System.out.println("用户数据预览  :" + user.toString());
+//        return user;
+
+
+
+        String userRole = JWT.decode(token).getClaim("userInfo").asString();
+        System.out.println("JWT 解析出来的 ：" + userRole);
 
         User user = null;
-        // 通过 userId 查找用户
-        user = (User) userService.SelectById(Integer.parseInt(userId));
-        System.out.println("用户数据预览  :" + user.toString());
-        return user;
+
+// 检查userRole格式
+        if (userRole != null && userRole.contains("-")) {
+            String[] parts = userRole.split("-");
+            if (parts.length == 2) {
+                String userId = parts[0];
+                String role = parts[1];
+
+                System.out.println("解密后的 :" + userRole);
+                System.out.println("Id :" + userId);
+                System.out.println("role :" + role);
+
+                try {
+                    user = userService.SelectByUsername(userId);
+                    //System.out.println("user.toString : "+user.toString());
+
+                    if (user != null) {
+                        System.out.println("用户数据预览  :" + user.toString());
+                        return user;
+                    } else {
+                        System.out.println("用户未找到");
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("无效的 userId: " + userId);
+                }
+            } else {
+                System.out.println("userRole 格式错误");
+            }
+        } else {
+            System.out.println("无效的 userRole");
+        }
+
+        return null;
     }
 
     /**
-     * 更新用户个人资料
+     * 更新当前登录用户个人资料
      * @return
      */
     public void Modify_UserInformation(HttpServletRequest request ,@RequestBody Userparameter requestBody){
@@ -211,11 +297,18 @@ public class UserFacade {
         String        avatar    = requestBody.getAvatar();
         int           role_id   = requestBody.getRole_id();
         int           status    = requestBody.getStatus();
-        LocalDateTime created_at= requestBody.getCreated_at();
 
-        User Guserid = getUserInfo(request);    //得到 token 解析获取 用户对象
+
+       // User Guserid = getUserInfo(request);    //得到 token 验证并解析获取 用户对象
+        User Guserid = getUserInfo(request);
+        if (Guserid == null) {
+            throw new IllegalArgumentException("User object cannot be null");
+        }
+
+        System.out.println("查看一下 信息预览    "+Guserid.toString());
 
         User user = new User();
+        user.setId(Guserid.getId());
         user.setUsername(username);
         user.setPassword(password);
         user.setReal_name(real_name);
@@ -223,9 +316,25 @@ public class UserFacade {
         user.setPhone(phone);
         user.setAvatar(avatar);
         user.setStatus(status);
-        user.setCreated_at(created_at);
 
         userService.Update(Guserid.getId(),user);  //根据 id 更新覆盖信息
+    }
+
+    /**
+     * 根据 ID 更新用户资料
+     */
+    public void Change_UserInformation(@RequestBody User requestBody){
+        User Ur = new User();
+        Ur.setId(requestBody.getId());
+        Ur.setUsername(requestBody.getUsername());
+        Ur.setPassword(requestBody.getPassword());
+        Ur.setReal_name(requestBody.getReal_name());
+        Ur.setPhone(requestBody.getPhone());
+        Ur.setAvatar(requestBody.getAvatar());
+        Ur.setRole_id(requestBody.getRole_id());
+        Ur.setStatus(requestBody.getStatus());
+
+        userService.Update(Ur.getId(),Ur);
     }
 
     /**
@@ -279,10 +388,6 @@ public class UserFacade {
         userService.DeleteBybatch(ids);
     }
 
-    //添加
-    public void Insert(User user){
-        userService.Insert(user);
-    }
 
     //###################################################################
 

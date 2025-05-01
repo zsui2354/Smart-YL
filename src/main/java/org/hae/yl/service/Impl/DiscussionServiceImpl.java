@@ -54,12 +54,4 @@ public class DiscussionServiceImpl implements DiscussionService {
     public void DeleteByIdbatch(List<Integer> ids) {
         discussionMapper.DeleteByIdbatch(ids);
     }
-
-    @Override
-    public void createDiscussion(int userId, String title, String content) {
-        Discussion discussion = new Discussion();
-        discussion.setTitle(title);
-        discussion.setContent(content);
-        discussion.setCreator_id(userId);
-    }
 }

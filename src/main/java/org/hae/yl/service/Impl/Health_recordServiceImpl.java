@@ -36,8 +36,8 @@ public class Health_recordServiceImpl implements Health_recordService {
     }
 
     @Override
-    public void Update(int id, Health_record health_record) {
-        health_recordMapper.Update(id, health_record);
+    public void Update(Health_record health_record) {
+        health_recordMapper.Update(health_record);
     }
 
     @Override

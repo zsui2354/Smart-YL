@@ -6,10 +6,7 @@ import org.hae.yl.entity.Comment;
 import org.hae.yl.entity.Discussion;
 import org.hae.yl.entity.Nursing_home;
 import org.hae.yl.facade.IssuesFacade;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -25,15 +22,15 @@ public class ApiComadmin_IssuesController {
     /**
      * 创建一个新的议题（类似 GitHub Issue）
      */
-    public void createDiscussion(int userId, String title, String content){
-        issuesFacade.createDiscussion(userId, title, content);
+    public void createDiscussion(Discussion discussion){
+        issuesFacade.createDiscussion(discussion);
     }
 
     /**
      * 给某个讨论添加评论
      */
-    public void addComment(int discussionId, int userId, String content){
-        issuesFacade.addComment(discussionId, userId, content);
+    public void addComment(@RequestBody Comment comment){
+        issuesFacade.addComment(comment);
     }
 
     /**

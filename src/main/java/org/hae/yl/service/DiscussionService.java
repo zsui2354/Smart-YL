@@ -41,5 +41,4 @@ public interface DiscussionService {
 
     void DeleteByIdbatch(List<Integer> ids);
 
-    void createDiscussion(int userId, String title, String content);
 }

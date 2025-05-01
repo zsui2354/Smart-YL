@@ -44,8 +44,8 @@ public class AnalyticsFacade {
 
         double cpuLoad = processor.getSystemCpuLoadBetweenTicks(prevTicks);
 
-      //  System.out.printf("CPU 使用率: %.2f%%%n", cpuLoad * 100);
-        return cpuLoad;
+        //System.out.printf("CPU 使用率: %.2f%%%n", cpuLoad * 100);
+        return cpuLoad * 100;
     }
 /**
  * RAM 占用

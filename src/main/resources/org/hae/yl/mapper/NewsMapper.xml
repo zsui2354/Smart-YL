@@ -18,13 +18,11 @@
         INSERT INTO News(
             title,
             content,
-            published_at,
             source
         ) values (
-            #{News.title},
-            #{News.content},
-            #{News.published_at},
-            #{News.source}
+            #{title},
+            #{content},
+            #{source}
         )
     </insert>
 
@@ -45,7 +43,7 @@
     <delete id="DeleteByIdbatch">
         DELETE FROM News
         WHERE id IN
-        <foreach collection="ids" item="id" open="(" separator="," close=")">
+        <foreach collection="list" item="id" open="(" separator="," close=")">
             #{id}
         </foreach>
     </delete>

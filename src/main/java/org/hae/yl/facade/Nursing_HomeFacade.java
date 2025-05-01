@@ -3,9 +3,11 @@ package org.hae.yl.facade;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.hae.yl.entity.Nursing_home;
+import org.hae.yl.model.Nursinghomeparameter;
 import org.hae.yl.service.Nursing_homeService;
 import org.hae.yl.service.Service_itemService;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
@@ -58,7 +60,7 @@ public class Nursing_HomeFacade {
      * @param name
      * @return
      */
-    public Nursing_home mapSearchInstitutions(String name){
+    public List<Nursing_home> mapSearchInstitutions(String name){
         return nursing_homeService.mapSearchInstitutions(name);
     }
 
@@ -81,8 +83,17 @@ public class Nursing_HomeFacade {
     /**
      *  根据 Id 修改
      */
-    public void Update(int id,Nursing_home nursing_home) {
-        nursing_homeService.Update(id,nursing_home);
+    public void Update(int id,@RequestBody Nursinghomeparameter nursing_home) {
+        Nursing_home Nh = new Nursing_home();
+        Nh.setId(nursing_home.getId());
+        Nh.setName(nursing_home.getName());
+        Nh.setAddress(nursing_home.getAddress());
+        Nh.setPhone(nursing_home.getPhone());
+        Nh.setDescription(nursing_home.getDescription());
+        Nh.setLongitude(nursing_home.getLongitude());
+        Nh.setLatitude(nursing_home.getLatitude());
+        Nh.setLevel(nursing_home.getLevel());
+        nursing_homeService.Update(id,Nh);
     }
 
     /**
@@ -100,8 +111,15 @@ public class Nursing_HomeFacade {
     /**
      *  增加
      */
-    public void Insert(Nursing_home nursing_home) {
-
-        nursing_homeService.insert(nursing_home);
+    public void Insert(@RequestBody Nursinghomeparameter nursing_home) {
+        Nursing_home Nh = new Nursing_home();
+        Nh.setName(nursing_home.getName());
+        Nh.setAddress(nursing_home.getAddress());
+        Nh.setPhone(nursing_home.getPhone());
+        Nh.setDescription(nursing_home.getDescription());
+        Nh.setLongitude(nursing_home.getLongitude());
+        Nh.setLatitude(nursing_home.getLatitude());
+        Nh.setLevel(nursing_home.getLevel());
+        nursing_homeService.insert(Nh);
     }
 }

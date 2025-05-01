@@ -22,5 +22,4 @@ public interface CommentService {
 
     void DeleteByIdbatch(List<Integer> ids);
 
-    void addComment(int discussionId, int userId, String content);
 }

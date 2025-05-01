@@ -57,16 +57,20 @@
         </foreach>
     </delete>
 
-    <select id="SelectAll" resultType="org.hae.yl.entity.Comment">
+    <select id="SelectAll" resultType="org.hae.yl.entity.Comment" resultMap="ContentResultMap">
         SELECT * FROM comment
     </select>
 
-    <select id="SelectByTheme" resultType="org.hae.yl.entity.Comment">
+    <select id="SelectByTheme" resultType="org.hae.yl.entity.Comment" resultMap="ContentResultMap">
         SELECT * FROM comment WHERE discussion_id = #{id}
     </select>
 
     <select id="SelectByThemeReturnIds" resultType="java.lang.Integer">
         SELECT id FROM comment WHERE discussion_id = #{id}
+    </select>
+
+    <select id="SelectById" resultType="org.hae.yl.entity.Comment" resultMap="ContentResultMap">
+        SELECT * FROM comment WHERE id = #{id}
     </select>
 
 
