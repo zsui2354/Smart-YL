@@ -21,19 +21,19 @@
             price ,
             home_id
         ) values (
-            #{Service_item.name},
-            #{Service_item.description},
-            #{Service_item.price},
-            #{Service_item.home_id}
+            #{name},
+            #{description},
+            #{price},
+            #{home_id}
         )
     </insert>
 
-    <update id="UpdateById">
-        update table Service_item
-        SET name = #{Service_item.name},
-            address = #{Service_item.description},
-            phone = #{Service_item.price},
-            description = #{Service_item.home_id}
+    <update id="Update">
+        update service_item
+        SET name = #{name},
+            description = #{description},
+            price = #{price},
+            home_id = #{home_id}
         where id = #{id}
     </update>
 
@@ -49,15 +49,15 @@
         </foreach>
     </delete>
 
-    <select id="SelectAll" resultType="org.hae.yl.entity.Service_item">
+    <select id="SelectAll" resultType="org.hae.yl.entity.Service_item" resultMap="Service_itemResultMap">
         select * from Service_item
     </select>
 
-    <select id="SelectById" resultType="org.hae.yl.entity.Service_item">
+    <select id="SelectById" resultType="org.hae.yl.entity.Service_item" resultMap="Service_itemResultMap">
         select * from Service_item where id = #{id}
     </select>
 
-    <select id="SelectByLike" resultType="org.hae.yl.entity.Service_item">
+    <select id="SelectByLike" resultType="org.hae.yl.entity.Service_item" resultMap="Service_itemResultMap">
         SELECT * FROM Service_item
         WHERE name LIKE CONCAT('%', #{like}, '%')
     </select>

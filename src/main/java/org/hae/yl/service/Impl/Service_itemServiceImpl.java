@@ -32,8 +32,8 @@ public class Service_itemServiceImpl implements Service_itemService {
     }
 
     @Override
-    public void UpdateById(Service_item service_item) {
-        service_itemMapper.UpdateById(service_item);
+    public void Update(Service_item service_item) {
+        service_itemMapper.Update(service_item);
     }
 
     @Override

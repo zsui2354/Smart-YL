@@ -16,7 +16,7 @@ public interface Service_itemService {
     List<Service_item> SelectByLike(Service_item service_item);
 
     //根据 ID 修改
-    void UpdateById(Service_item service_item);
+    void Update(Service_item service_item);
 
     //根据 ID 删除
     void DeleteById(Integer id);

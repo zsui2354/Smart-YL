@@ -7,6 +7,7 @@ import org.hae.yl.entity.Service_item;
 import org.hae.yl.service.Service_appointmentService;
 import org.hae.yl.service.Service_itemService;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
@@ -39,6 +40,42 @@ public class SericeFacade {
         PageHelper.startPage(pageNum, pageSize);
         List<Service_item> list = service_itemService.SelectAll();
         return new PageInfo<>(list);
+    }
+
+    /**
+     * 添加服务项目
+     * @param service_item
+     */
+    public void insertServiceItem(@RequestBody Service_item service_item) {
+        Service_item Sm = new Service_item();
+        Sm.setName(service_item.getName());
+        Sm.setDescription(service_item.getDescription());
+        Sm.setPrice(service_item.getPrice());
+        Sm.setHome_id(service_item.getHome_id());
+
+        service_itemService.Insert(Sm);
+    }
+
+    /**
+     * 修改更新服务项目
+     */
+    public void updateServiceItem(@RequestBody Service_item service_item) {
+        Service_item Sm = new Service_item();
+        Sm.setId(service_item.getId());
+        Sm.setName(service_item.getName());
+        Sm.setDescription(service_item.getDescription());
+        Sm.setPrice(service_item.getPrice());
+        Sm.setHome_id(service_item.getHome_id());
+
+        service_itemService.Update(Sm);
+    }
+
+    /**
+     * 删除服务项目
+     * @param id
+     */
+    public void DeleteServiceItem(int id) {
+        service_itemService.DeleteById(id);
     }
 
     /**

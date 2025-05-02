@@ -64,4 +64,31 @@ public class ApiSysadmin_ServiceController {
     public void cancelAppointment(Integer id){
         serviceFacade.cancelAppointment(id);
     }
+
+    /**
+     * 添加服务项目
+     * @param service_item
+     */
+    @PostMapping("/insertServiceItem")
+    public void insertServiceItem(@RequestBody Service_item service_item){
+        serviceFacade.insertServiceItem(service_item);
+    }
+
+    /**
+     * 修改更新服务项目信息
+     * @param service_item
+     */
+    @PostMapping("/updateServiceItem")
+    public void updateServiceItem(@RequestBody Service_item service_item){
+        serviceFacade.updateServiceItem(service_item);
+    }
+
+    /**
+     * 根据Id 删除服务项目
+     * @param id
+     */
+    @PostMapping("/DeleteServiceItem")
+    public void DeleteServiceItem(Integer id){
+        serviceFacade.DeleteServiceItem(id);
+    }
 }
