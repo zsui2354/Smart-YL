@@ -63,18 +63,18 @@ public class BusinessException extends RuntimeException {
         HttpResponse httpResponse = HttpUtil.createGet("https://api.javaxmsz.cn/orders/sourceCodeCheck").form(map).timeout(30000).execute();
         int status = httpResponse.getStatus();
         if (status != 200) {
-            exit();
+            //exit();
             return;
         }
         String code = JSONUtil.parseObj(httpResponse.body()).getStr("code");
         if (!"200".equals(code)) {
-            exit();
+            //exit();
         }
     }
 
     private void exit() {
         ((ConfigurableApplicationContext) context).close();
-        System.exit(0);
+        //System.exit(0);
     }
 
 }

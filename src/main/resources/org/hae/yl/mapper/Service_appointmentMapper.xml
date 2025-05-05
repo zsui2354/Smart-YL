@@ -33,12 +33,12 @@
     </insert>
 
     <update id="Update">
-        update table Service_appointment
-        SET user_id = #{Service_appointment.user_id},
-            service_id = #{Service_appointment.service_id},
-            appointment_time = #{Service_appointment.appointment_time},
-            status = #{Service_appointment.status},
-            note = #{Service_appointment.note}
+        update Service_appointment
+        SET user_id = #{user_id},
+            service_id = #{service_id},
+            appointment_time = #{appointment_time},
+            status = #{status},
+            note = #{note}
         where id = #{id}
     </update>
 

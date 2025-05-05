@@ -56,4 +56,13 @@ public class ApiStaff_SericeController {
     public void assignStaffToBooking(@RequestBody Service_appointment appointment){
         sericeFacade.assignStaffToBooking(appointment);
     }
+
+    /**
+     * 修改更新预约的状态
+     */
+    @PostMapping("")
+    public void ModifyTheAppointment(@RequestBody Service_appointment appointment){
+
+        sericeFacade.updateServiceStatus(appointment);
+    }
 }

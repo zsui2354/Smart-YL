@@ -36,8 +36,8 @@ public class Service_appointmentServiceImpl implements Service_appointmentServic
     }
 
     @Override
-    public void Update(int id, Service_appointment service_appointment) {
-        service_appointmentMapper.Update(id, service_appointment);
+    public void Update(Service_appointment service_appointment) {
+        service_appointmentMapper.Update(service_appointment);
     }
 
     @Override

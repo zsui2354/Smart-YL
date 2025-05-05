@@ -120,6 +120,14 @@ public class SericeFacade {
         return service_appointmentService.SelectById(id);
     }
 
+    /**
+     * 修改预约的状态
+     * @param service_appointment
+     */
+    public void updateServiceStatus(@RequestBody Service_appointment service_appointment) {
+        service_appointmentService.Update(service_appointment);
+    }
+
     //    管理员为预约任务分配工作人员(职工)
     public void assignStaffToBooking(@RequestParam Service_appointment appointment){
 

@@ -30,7 +30,7 @@ public interface Service_appointmentService {
     /**
      * 根据 Id 修改
      */
-    void Update(int id, Service_appointment service_appointment);
+    void Update(Service_appointment service_appointment);
 
     /**
      * 根据 Id 删除
