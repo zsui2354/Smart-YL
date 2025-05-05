@@ -35,7 +35,7 @@ public class ApiComadmin_NewsController {
     /**
      * 获取新闻详情
      */
-    public String getNewsDetail(int id){
+    public News getNewsDetail(int id){
         return newsFacade.getNewsDetail(id);
     }
 
@@ -83,7 +83,7 @@ public class ApiComadmin_NewsController {
     /**
      * 获取新闻详情
      */
-    public String NewsgetNewsDetail(int id){
+    public News NewsgetNewsDetail(int id){
         return newsFacade.getNewsDetail(id);
     }
 

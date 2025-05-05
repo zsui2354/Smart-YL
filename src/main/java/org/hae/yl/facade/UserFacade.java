@@ -71,12 +71,13 @@ public class UserFacade {
         user_obj.setReal_name(real_name);
         user_obj.setRole_id(role_id);
         user_obj.setPhone(phone);
+        user_obj.setStatus(1);
 
 
         System.out.println("user_obj   ："+user_obj.toString());
 
         userService.Insert(user_obj);
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("SUCCESS");
+        return ResponseEntity.ok("SUCCESS");
     }
 
     /**
@@ -309,7 +310,7 @@ public class UserFacade {
 
         User user = new User();
         user.setId(Guserid.getId());
-        user.setUsername(username);
+        user.setUsername(Guserid.getUsername());
         user.setPassword(password);
         user.setReal_name(real_name);
         user.setRole_id(role_id);

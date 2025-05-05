@@ -42,6 +42,8 @@ public class ApiUser_UserController {
      */
     @PostMapping("/setuserinfo")
     public void setUserInfo(HttpServletRequest request,@RequestBody Userparameter requestBody){
+        requestBody.setRole_id(1);
+        requestBody.setStatus(1);
         userFacade.Modify_UserInformation( request , requestBody);
     }
 

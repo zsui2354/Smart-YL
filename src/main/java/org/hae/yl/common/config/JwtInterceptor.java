@@ -58,7 +58,7 @@ public class JwtInterceptor implements HandlerInterceptor {
         if (request.getMethod().equals("OPTIONS")){
             return true;
         } else{
-            token = request.getHeader(Constants.TOKEN); //从请求头获取 token
+            token = request.getHeader("Authorization"); //从请求头获取 token
         }
 
        // String token = request.getHeader(Constants.TOKEN); //从请求头获取 token
@@ -123,9 +123,10 @@ public class JwtInterceptor implements HandlerInterceptor {
         }
         try{
             // 用户密码加签验证 token
-            JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(user.getPassword())).build();
+            JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256("my_jwt_secret_key")).build();
             jwtVerifier.verify(token); // 验证token
         }catch (JWTVerificationException e){
+
             throw new CustomException(ResultCodeEnum.TOKEN_CHECK_ERROR);//抛出 token 检查错误
         }
         return true;

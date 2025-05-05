@@ -35,7 +35,7 @@ public class FileController {
      * 文件上传
      */
     @PostMapping("/upload")
-    public Result upload(MultipartFile file) {
+    public Result upload(@RequestParam("file") MultipartFile file) {
         String flag;
         synchronized (FileController.class) {
             flag = System.currentTimeMillis() + "";

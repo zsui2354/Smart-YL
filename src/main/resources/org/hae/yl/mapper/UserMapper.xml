@@ -47,7 +47,7 @@
             avatar = #{user.avatar},
             role_id = #{user.role_id},
             status = #{user.status}
-        WHERE id = #{user.id}
+        WHERE id = #{id}
     </update>
 
     <delete id="Delete">

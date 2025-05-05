@@ -21,27 +21,23 @@
             discussion_id,
             user_id,
             content,
-            parent_id,
-            created_at,
-            updated_at
+            parent_id
         ) values (
             #{discussion_id},
             #{user_id},
             #{content},
-            #{parent_id},
-            #{created_at},
-            #{updated_at}
+            #{parent_id}
         )
     </insert>
 
     <update id="Update">
-        update table comment
-        SET discussion_id = #{comment.discussion_id},
-            user_id = #{comment.user_id},
-            content = #{comment.content},
-            parent_id = #{comment.parent_id},
-            created_at = #{comment.created_at},
-            updated_at = #{comment.updated_at}
+        update comment
+        SET discussion_id = #{discussion_id},
+            user_id = #{user_id},
+            content = #{content},
+            parent_id = #{parent_id},
+            created_at = #{created_at},
+            updated_at = #{updated_at}
         where id = #{id}
     </update>
 
@@ -57,19 +53,19 @@
         </foreach>
     </delete>
 
-    <select id="SelectAll" resultType="org.hae.yl.entity.Comment" resultMap="ContentResultMap">
+    <select id="SelectAll"  resultMap="ContentResultMap">
         SELECT * FROM comment
     </select>
 
-    <select id="SelectByTheme" resultType="org.hae.yl.entity.Comment" resultMap="ContentResultMap">
+    <select id="SelectByTheme"  resultMap="ContentResultMap">
         SELECT * FROM comment WHERE discussion_id = #{id}
     </select>
 
-    <select id="SelectByThemeReturnIds" resultType="java.lang.Integer">
+    <select id="SelectByThemeReturnIds" resultMap="ContentResultMap">
         SELECT id FROM comment WHERE discussion_id = #{id}
     </select>
 
-    <select id="SelectById" resultType="org.hae.yl.entity.Comment" resultMap="ContentResultMap">
+    <select id="SelectById"  resultMap="ContentResultMap">
         SELECT * FROM comment WHERE id = #{id}
     </select>
 

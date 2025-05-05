@@ -41,7 +41,7 @@ public class ApiUser_IssuesController {
     /**
      * 根据 ID 给讨论添加评论
      */
-    @GetMapping("/addcomment")
+    @PostMapping("/addcomment")
     public void addComment(@RequestBody Comment comment){
         issuesFacade.addComment(comment);
     }

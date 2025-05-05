@@ -96,16 +96,20 @@ public class IssuesFacade {
         User user = userFacade.getUserInfo(request);        //获取当前用户信息
         Comment comment = conmentService.SelectById(id);    //获取当前评论信息
 
+        System.out.println("打印 comment 信息 ： "+comment.toString());
+
         System.out.println("C :" + comment.toString());
-        //System.out.println(comment.getUser_id() +"  :  "+ user.getId());
+        System.out.println(comment.getUser_id() +"  :  "+ user.getId());
 
 
         if (comment.getUser_id() == user.getId()) {//评论发布人ID 和 当前请求人ID是否一致
             conmentService.DeleteById(id);
+            return;
         }
         if (user.getRole_id() == 3 || user.getRole_id() == 2) {//是否是管理员
             // TODO: 角色判断是否是管理员
             conmentService.DeleteById(id);
+            return;
         }
         throw new RuntimeException("无权限删除");
     }

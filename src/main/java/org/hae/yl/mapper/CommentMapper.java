@@ -12,7 +12,7 @@ public interface CommentMapper extends BaseMapper<Comment> {
 
     List<Comment> SelectAll();
 
-    Comment SelectById(Integer id);
+    Comment SelectById(@Param("id") Integer id);
 
     List<Comment> SelectByTheme(int id);
 

@@ -50,9 +50,9 @@ public class NewsFacade {
     /**
      * 获取新闻详情
      */
-    public String getNewsDetail(int id) {
+    public News getNewsDetail(int id) {
         News news = newsService.SelectById(id);
-        return "<p>" + news.getContent() + "</p>";
+        return news;
     }
 
     /**

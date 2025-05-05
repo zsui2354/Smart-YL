@@ -7,15 +7,16 @@ public class CustomException extends RuntimeException {
     private String msg;
 
     public CustomException(ResultCodeEnum resultCodeEnum) {
+        super(resultCodeEnum.msg); // ✅ 添加这行
         this.code = resultCodeEnum.code;
         this.msg = resultCodeEnum.msg;
     }
 
     public CustomException(String code, String msg) {
+        super(msg); // ✅ 添加这行
         this.code = code;
         this.msg = msg;
     }
-
 
     public String getCode() {
         return code;

@@ -22,7 +22,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Comment SelectById(int id) {
-        return contentMapper.selectById(id);
+        return contentMapper.SelectById(id);
     }
 
     @Override

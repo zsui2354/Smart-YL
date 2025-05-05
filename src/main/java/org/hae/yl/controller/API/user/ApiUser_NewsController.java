@@ -31,7 +31,7 @@ public class ApiUser_NewsController {
      * 获取新闻详情
      */
     @GetMapping("/getNewsDetail")
-    public String getNewsDetail(int id){
+    public News getNewsDetail(int id){
         return newsFacade.getNewsDetail(id);
     }
 
